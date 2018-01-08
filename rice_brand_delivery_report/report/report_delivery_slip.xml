@@ -61,11 +61,11 @@
         </xpath>
 
         <xpath expr="//div/table[1]/thead[1]/tr/th[6]" position="replace">
-            <th class="text-center"><strong>Total Number of Boxes</strong></th>
+            <th t-if="o.package_ids" class="text-center"><strong>Total Number of Boxes</strong></th>
         </xpath>
 
         <xpath expr="//div/table[1]/tbody[1]/tr/td[6]" position="replace">
-            <td>
+            <td t-if="o.package_ids">
                 <table class="mr16 pull-right">
                     <tbody>
                         <tr t-foreach="o.package_ids.sorted(key=lambda p: p.name)" t-as="package" class="mb64">

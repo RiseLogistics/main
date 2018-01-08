@@ -19,7 +19,7 @@
         <field name="inherit_id" ref="stock.report_picking"/>
         <field name="arch" type="xml">
             <xpath expr="//p[@t-field='o.note']" position="after">
-                   <div class="clearfix mb32 mt32">
+                   <div class="clearfix mb32 mt64">
                     <div class="row" name="total">
                         <div class="col-xs-4 pull-right">
                             <table class="table-condensed" style="min-width: 200px;max-width: 350px;">
