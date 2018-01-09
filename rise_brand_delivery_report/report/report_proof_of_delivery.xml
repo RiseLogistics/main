@@ -6,8 +6,8 @@
             id="action_report_proof_of_delivery"
             model="stock.picking"
             report_type="qweb-pdf"
-            name="rice_brand_delivery_report.report_proof_of_delivery"
-            file="rice_brand_delivery_report.report_proof_of_delivery"
+            name="rise_brand_delivery_report.report_proof_of_delivery"
+            file="rise_brand_delivery_report.report_proof_of_delivery"
             print_report_name="'Proof of Delivery'"
         />
     </data>
