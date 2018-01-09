@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
-    'name': 'Rice Brand',
+    'name': 'RISE Brand',
     'version': '1.0',
     'summary': 'Delivery Slip Customization',
     'description': """
@@ -12,6 +12,7 @@ Customization report for delivery slip and receipts also having reports for proo
         'report/report_delivery_slip.xml',
         'report/report_proof_of_pickup.xml',
         'report/report_proof_of_delivery.xml',
+        'views/res_partner_view.xml',
     ],
     'installable': True,
     'application': False,
