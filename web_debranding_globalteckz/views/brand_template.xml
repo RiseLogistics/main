@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="layout" inherit_id="web.layout">
+        <xpath expr="//link[@rel='shortcut icon']" position="replace">
+            <link rel="icon" href="/web_favicon/ficn" type="image/x-icon"/>
+        </xpath>
+    </template>
+    
+    <template id="secondary_id" inherit_id="web.menu_secondary">
+        <xpath expr="//div[@class='o_sub_menu_footer']" position="replace">
+             <a href="http://www.odoo.com" target="_blank" id="brand_footer">Powered by<span id="brand_name">Odoo</span></a>
+        </xpath>
+    </template>
+</odoo>
