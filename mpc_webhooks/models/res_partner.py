@@ -12,14 +12,29 @@ class res_partner(models.Model):
 
 	@api.model
 	def create(self, vals):
-		new_product = super(res_partner, self).create(vals)
+		record = super(res_partner, self).create(vals)
 
 		try:
-			payload = {'model':'res.partner','id':new_product.id}
+			payload = {'model':'res.partner','id':record.id,'trigger':'create'}
 			_logger.info("sending test webhook: " + str(payload))
 
 			r = requests.post( "https://mpcrequestbin.herokuapp.com/15iix041",data=json.dumps(payload),headers={'Content-Type': 'application/json'})
 		except Exception as error:
 			_logger.info("error sending webhook: " + str(error))
 
-		return new_product
+		return record
+
+
+
+	@api.multi
+	def write(self, vals):
+		record = super(vals, self).write(vals)
+		try:
+			payload = {'model':'res.partner','id':record.id,'trigger':'update'}
+			_logger.info("sending test webhook: " + str(payload))
+
+			r = requests.post( "https://mpcrequestbin.herokuapp.com/15iix041",data=json.dumps(payload),headers={'Content-Type': 'application/json'})
+		except Exception as error:
+			_logger.info("error sending webhook: " + str(error))
+
+		return record
