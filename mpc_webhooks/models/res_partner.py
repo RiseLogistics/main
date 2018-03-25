@@ -10,7 +10,8 @@ class ResPartner(models.Model):
 
 	@api.model
 	def create(self, vals):
-		print "DEBUG: CREATE 1"
+		print("DEBUG: CREATE 1")
 		new_product = super(ResPartner, self).create(vals)
-		print "DEBUG: CREATE 2"
+		print("new_product: " + str(new_product))
+		print("DEBUG: CREATE 2")
 		return new_product
