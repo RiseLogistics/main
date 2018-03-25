@@ -26,7 +26,7 @@ class res_partner(models.Model):
 
 	@api.multi
 	def unlink(self):
-		super(res_partner,self).unlink()
+		record = super(res_partner,self).unlink()
 		try:
 			payload = {'model':'res.partner','id':self.id,'trigger':'unlink'}
 			_logger.info("sending test webhook: " + str(payload))
