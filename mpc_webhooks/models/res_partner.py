@@ -30,7 +30,7 @@ class res_partner(models.Model):
 	def write(self, vals):
 		record = super(res_partner, self).write(vals)
 		try:
-			payload = {'model':'res.partner','id':record.id,'trigger':'write'}
+			payload = {'model':'res.partner','id':vals['id'],'trigger':'write'}
 			_logger.info("sending test webhook: " + str(payload))
 
 			r = requests.post( "https://mpcrequestbin.herokuapp.com/15iix041",data=json.dumps(payload),headers={'Content-Type': 'application/json'})
