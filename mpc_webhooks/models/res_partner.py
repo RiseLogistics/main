@@ -3,17 +3,20 @@
 
 from odoo import fields, models, api
 import logging
+import requests
 _logger = logging.getLogger(__name__)
 
 class res_partner(models.Model):
 	_inherit = 'res.partner'
-	mpc_test_field = fields.Boolean('MPC Test Field', default=True)
 
 	@api.model
 	def create(self, vals):
-		vals['name'] = vals['name'] + "__edited by module"
-		_logger.info("DEBUG: CREATE 1")
 		new_product = super(res_partner, self).create(vals)
-		_logger.info("new_product: " + str(new_product))
-		_logger.info("DEBUG: CREATE 2")
+
+		try:
+			_logger.info("sending test webhook")
+			r = requests.post( "https://mpcrequestbin.herokuapp.com/15iix041",data=json.dumps(new_product),headers={'Content-Type': 'application/json'})
+		except Exception as error:
+			_logger.info("error sending webhook: " + str(error))
+
 		return new_product
