@@ -7,6 +7,10 @@ _logger = logging.getLogger(__name__)
 
 class ResPartner(models.Model):
 	_inherit = 'res.partner'
-	def create(self, cr, uid, vals, context=None):
-		_logger.info("mpc - test - create - mpc -test - create - mpc - test - create")
-		return super(self).create(cr, uid, vals, context=context)
+
+	@api.model
+	def create(self, vals):
+		print "DEBUG: CREATE 1"
+		new_product = super(ResPartner, self).create(vals)
+		print "DEBUG: CREATE 2"
+		return new_product
