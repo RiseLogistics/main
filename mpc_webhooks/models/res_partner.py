@@ -9,4 +9,4 @@ class ResPartner(models.Model):
 	_inherit = 'res.partner'
 	def create(self, cr, uid, vals, context=None):
 		_logger.info("mpc - test - create - mpc -test - create - mpc - test - create")
-		return super(pos_order, self).create(cr, uid, vals, context=context)
+		return super(self).create(cr, uid, vals, context=context)
