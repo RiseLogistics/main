@@ -24,7 +24,18 @@ class res_partner(models.Model):
 
 		return record
 
+	@api.multi
+	def unlink(self):
+		super(res_partner,self).unlink()
+		try:
+			payload = {'model':'res.partner','id':self.id,'trigger':'unlink'}
+			_logger.info("sending test webhook: " + str(payload))
 
+			r = requests.post( "https://mpcrequestbin.herokuapp.com/15iix041",data=json.dumps(payload),headers={'Content-Type': 'application/json'})
+		except Exception as error:
+			_logger.info("error sending webhook: " + str(error))
+
+		return record		
 
 	@api.multi
 	def write(self, vals):
@@ -33,7 +44,7 @@ class res_partner(models.Model):
 			_logger.info("res_partner:" + str(res_partner))
 			_logger.info("write values:" + str(vals))
 			_logger.info("self: " + str(self))
-			payload = {'model':'res.partner','trigger':'write'}
+			payload = {'model':'res.partner','trigger':'write','id:'self.id}
 			_logger.info("sending test webhook: " + str(payload))
 
 			r = requests.post( "https://mpcrequestbin.herokuapp.com/15iix041",data=json.dumps(payload),headers={'Content-Type': 'application/json'})
