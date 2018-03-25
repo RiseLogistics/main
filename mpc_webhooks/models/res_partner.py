@@ -28,9 +28,9 @@ class res_partner(models.Model):
 
 	@api.multi
 	def write(self, vals):
-		record = super(vals, self).write(vals)
+		record = super(res_partner, self).write(vals)
 		try:
-			payload = {'model':'res.partner','id':record.id,'trigger':'update'}
+			payload = {'model':'res.partner','id':record.id,'trigger':'write'}
 			_logger.info("sending test webhook: " + str(payload))
 
 			r = requests.post( "https://mpcrequestbin.herokuapp.com/15iix041",data=json.dumps(payload),headers={'Content-Type': 'application/json'})
