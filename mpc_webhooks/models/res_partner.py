@@ -15,8 +15,10 @@ class res_partner(models.Model):
 		new_product = super(res_partner, self).create(vals)
 
 		try:
-			_logger.info("sending test webhook")
-			r = requests.post( "https://mpcrequestbin.herokuapp.com/15iix041",data=json.dumps(new_product),headers={'Content-Type': 'application/json'})
+			payload = {'model':'res.partner','id':new_product.id}
+			_logger.info("sending test webhook: " + str(payload))
+
+			r = requests.post( "https://mpcrequestbin.herokuapp.com/15iix041",data=json.dumps(payload),headers={'Content-Type': 'application/json'})
 		except Exception as error:
 			_logger.info("error sending webhook: " + str(error))
 
