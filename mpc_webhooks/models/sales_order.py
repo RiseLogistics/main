@@ -13,6 +13,6 @@ class sales_order(models.Model):
 		_logger.info(str(self))
 		return {
 			'type': 'ir.actions.act_url',
-			'url': 'https://mpcrequestbin.herokuapp.com/15iix041?id=%s' % (self.id),
+			'url': 'https://mpcrequestbin.herokuapp.com/15iix041?id=%s&q=test' % (self.id),
 			'target': 'self'
 		}

@@ -4,7 +4,7 @@
     'name': 'MPC Studios WEbhooks',
     'version': '1.2',
     'summary': 'Custom notifications for Odoo models',
-    'depends': ['account'],
+    'depends': ['account','sale'],
     'data': [
     ],
     'installable': True,
