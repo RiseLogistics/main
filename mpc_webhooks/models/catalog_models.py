@@ -51,72 +51,72 @@ class product_product(models.Model):
 		send_webhook( self.id,self._inherit,'write')
 		return record
 
+if True:
+	class x_varietal(models.Model):
+		_inherit = 'x_varietal'
 
-class x_varietal(models.Model):
-	_inherit = 'x_varietal'
+		@api.model
+		def create(self, vals):
+			record = super(x_varietal,self).create(vals)
+			send_webhook( record.id,self._inherit,'create')
+			return record
 
-	@api.model
-	def create(self, vals):
-		record = super(x_varietal,self).create(vals)
-		send_webhook( record.id,self._inherit,'create')
-		return record
+		@api.multi
+		def unlink(self):
+			record = super(x_varietal,self).unlink()
+			send_webhook( self.id,self._inherit,'unlink')
+			return record		
 
-	@api.multi
-	def unlink(self):
-		record = super(x_varietal,self).unlink()
-		send_webhook( self.id,self._inherit,'unlink')
-		return record		
-
-	@api.multi
-	def write(self, vals):
-		record = super(x_varietal, self).write(vals)
-		send_webhook( self.id,self._inherit,'write')
-		return record
-
-
-class x_cannabis_type(models.Model):
-	_inherit = 'x_cannabis_type'
-
-	@api.model
-	def create(self, vals):
-		record = super(x_cannabis_type,self).create(vals)
-		send_webhook( record.id,self._inherit,'create')
-		return record
-
-	@api.multi
-	def unlink(self):
-		record = super(x_cannabis_type,self).unlink()
-		send_webhook( self.id,self._inherit,'unlink')
-		return record		
-
-	@api.multi
-	def write(self, vals):
-		record = super(x_cannabis_type, self).write(vals)
-		send_webhook( self.id,self._inherit,'write')
-		return record
+		@api.multi
+		def write(self, vals):
+			record = super(x_varietal, self).write(vals)
+			send_webhook( self.id,self._inherit,'write')
+			return record
 
 
+	class x_cannabis_type(models.Model):
+		_inherit = 'x_cannabis_type'
 
-class x_brand(models.Model):
-	_inherit = 'x_brand'
+		@api.model
+		def create(self, vals):
+			record = super(x_cannabis_type,self).create(vals)
+			send_webhook( record.id,self._inherit,'create')
+			return record
 
-	@api.model
-	def create(self, vals):
-		record = super(x_brand,self).create(vals)
-		send_webhook( record.id,self._inherit,'create')
-		return record
+		@api.multi
+		def unlink(self):
+			record = super(x_cannabis_type,self).unlink()
+			send_webhook( self.id,self._inherit,'unlink')
+			return record		
 
-	@api.multi
-	def unlink(self):
-		record = super(x_brand,self).unlink()
-		send_webhook( self.id,self._inherit,'unlink')
-		return record		
+		@api.multi
+		def write(self, vals):
+			record = super(x_cannabis_type, self).write(vals)
+			send_webhook( self.id,self._inherit,'write')
+			return record
 
-	@api.multi
-	def write(self, vals):
-		record = super(x_brand, self).write(vals)
-		send_webhook( self.id,self._inherit,'write')
-		return record
+
+
+	class x_brand(models.Model):
+		_inherit = 'x_brand'
+
+		@api.model
+		def create(self, vals):
+			record = super(x_brand,self).create(vals)
+			send_webhook( record.id,self._inherit,'create')
+			return record
+
+		@api.multi
+		def unlink(self):
+			record = super(x_brand,self).unlink()
+			send_webhook( self.id,self._inherit,'unlink')
+			return record		
+
+		@api.multi
+		def write(self, vals):
+			record = super(x_brand, self).write(vals)
+			send_webhook( self.id,self._inherit,'write')
+			return record
 
 
 class product_uom(models.Model):

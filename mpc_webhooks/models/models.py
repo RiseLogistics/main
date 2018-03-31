@@ -28,7 +28,7 @@ class res_partner(models.Model):
 	@api.multi
 	def write(self, vals):
 		record = super(res_partner, self).write(vals)
-		send_webhook( record.id,self._inherit,'write')
+		send_webhook( self.id,self._inherit,'write')
 		return record
 
 
