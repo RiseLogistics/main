@@ -15,6 +15,7 @@ class sales_order(models.Model):
 		_logger.info( str(sys.version) )
 		return {
 			'type': 'ir.actions.act_url',
-			'url': 'https://mpcrequestbin.herokuapp.com/15iix041?id=%s&q=test' % (self.id),
+			#'url': 'https://mpcrequestbin.herokuapp.com/15iix041?id=%s&q=test' % (self.id),
+			'url' : 'http://localhost:5000/',
 			'target': 'self'
 		}
