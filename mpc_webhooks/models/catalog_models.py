@@ -51,7 +51,7 @@ class product_product(models.Model):
 		send_webhook( self.id,self._inherit,'write')
 		return record
 
-if True:
+if False:
 	class x_varietal(models.Model):
 		_inherit = 'x_varietal'
 

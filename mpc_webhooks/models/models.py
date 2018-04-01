@@ -22,7 +22,7 @@ class res_partner(models.Model):
 	@api.multi
 	def unlink(self):
 		record = super(res_partner,self).unlink()
-		send_webhook( record.id,self._inherit,'unlink')
+		send_webhook( self.id,self._inherit,'unlink')
 		return record		
 
 	@api.multi
