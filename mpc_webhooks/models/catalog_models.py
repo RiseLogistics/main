@@ -15,7 +15,7 @@ class product_template(models.Model):
 		send_webhook( record.id,self._inherit,'create')
 		return record
 
-	@api.multi
+	@api.one
 	def unlink(self):
 		record = super(product_template,self).unlink()
 		send_webhook( self.id,self._inherit,'unlink')
@@ -39,7 +39,7 @@ class product_product(models.Model):
 		send_webhook( record.id,self._inherit,'create')
 		return record
 
-	@api.multi
+	@api.one
 	def unlink(self):
 		record = super(product_product,self).unlink()
 		send_webhook( self.id,self._inherit,'unlink')
@@ -61,7 +61,7 @@ if False:
 			send_webhook( record.id,self._inherit,'create')
 			return record
 
-		@api.multi
+		@api.one
 		def unlink(self):
 			record = super(x_varietal,self).unlink()
 			send_webhook( self.id,self._inherit,'unlink')
@@ -83,7 +83,7 @@ if False:
 			send_webhook( record.id,self._inherit,'create')
 			return record
 
-		@api.multi
+		@api.one
 		def unlink(self):
 			record = super(x_cannabis_type,self).unlink()
 			send_webhook( self.id,self._inherit,'unlink')
@@ -106,7 +106,7 @@ if False:
 			send_webhook( record.id,self._inherit,'create')
 			return record
 
-		@api.multi
+		@api.one
 		def unlink(self):
 			record = super(x_brand,self).unlink()
 			send_webhook( self.id,self._inherit,'unlink')
@@ -128,7 +128,7 @@ class product_uom(models.Model):
 		send_webhook( record.id,self._inherit,'create')
 		return record
 
-	@api.multi
+	@api.one
 	def unlink(self):
 		record = super(product_uom,self).unlink()
 		send_webhook( self.id,self._inherit,'unlink')
@@ -151,7 +151,7 @@ class product_category(models.Model):
 		send_webhook( record.id,self._inherit,'create')
 		return record
 
-	@api.multi
+	@api.one
 	def unlink(self):
 		record = super(product_category,self).unlink()
 		send_webhook( self.id,self._inherit,'unlink')
