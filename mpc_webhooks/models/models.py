@@ -25,7 +25,7 @@ class res_partner(models.Model):
 		send_webhook( self.id,self._inherit,'unlink')
 		return record		
 
-	@api.multi
+	@api.one
 	def write(self, vals):
 		record = super(res_partner, self).write(vals)
 		send_webhook( self.id,self._inherit,'write')
@@ -48,7 +48,7 @@ class sale_order(models.Model):
 		send_webhook( self.id,self._inherit,'unlink')
 		return record		
 
-	@api.multi
+	@api.one
 	def write(self, vals):
 		record = super(sale_order, self).write(vals)
 		send_webhook( self.id,self._inherit,'write')
@@ -74,7 +74,7 @@ class stock_picking(models.Model):
 		send_webhook( self.id,self._inherit,'unlink')
 		return record		
 
-	@api.multi
+	@api.one
 	def write(self, vals):
 		record = super(stock_picking, self).write(vals)
 		send_webhook( self.id,self._inherit,'write')
@@ -98,7 +98,7 @@ class stock_quant(models.Model):
 		send_webhook( self.id,self._inherit,'unlink')
 		return record		
 
-	@api.multi
+	@api.one
 	def write(self, vals):
 		record = super(stock_quant, self).write(vals)
 		send_webhook( self.id,self._inherit,'write')
