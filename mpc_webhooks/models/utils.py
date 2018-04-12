@@ -5,11 +5,11 @@ import json
 _logger = logging.getLogger(__name__)
 
 
-def send_webhook(id,model,trigger):
+def send_webhook(id,model,trigger,dbname=None):
 	try:
 		webhook_url = None
 
-		if "staging" in self._cr.dbname:
+		if "staging" in dbname:
 			webhook_url = "https://rise-online.herokuapp.com/api/v3/webhooks/odoo"	
 		else:
 			webhook_url = "https://rise-logistics.herokuapp.com/api/v3/webhooks/odoo"

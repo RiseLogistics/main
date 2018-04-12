@@ -16,19 +16,19 @@ class res_partner(models.Model):
 	@api.model
 	def create(self, vals):
 		record = super(res_partner,self).create(vals)
-		send_webhook( record.id,self._inherit,'create')
+		send_webhook( record.id,self._inherit,'create',self._cr.dbname)
 		return record
 
 	@api.one
 	def unlink(self):
 		record = super(res_partner,self).unlink()
-		send_webhook( self.id,self._inherit,'unlink')
+		send_webhook( self.id,self._inherit,'unlink',self._cr.dbname)
 		return record		
 
 	@api.one
 	def write(self, vals):
 		record = super(res_partner, self).write(vals)
-		send_webhook( self.id,self._inherit,'write')
+		send_webhook( self.id,self._inherit,'write',self._cr.dbname)
 		return record
 
 
@@ -39,19 +39,19 @@ class sale_order(models.Model):
 	@api.model
 	def create(self, vals):
 		record = super(sale_order,self).create(vals)
-		send_webhook( record.id,self._inherit,'create')
+		send_webhook( record.id,self._inherit,'create',self._cr.dbname)
 		return record
 
 	@api.one
 	def unlink(self):
 		record = super(sale_order,self).unlink()
-		send_webhook( self.id,self._inherit,'unlink')
+		send_webhook( self.id,self._inherit,'unlink',self._cr.dbname)
 		return record		
 
 	@api.one
 	def write(self, vals):
 		record = super(sale_order, self).write(vals)
-		send_webhook( self.id,self._inherit,'write')
+		send_webhook( self.id,self._inherit,'write',self._cr.dbname)
 		return record
 
 
@@ -64,20 +64,20 @@ class stock_picking(models.Model):
 	@api.model
 	def create(self, vals):
 		record = super(stock_picking,self).create(vals)
-		send_webhook( record.id,self._inherit,'create')
+		send_webhook( record.id,self._inherit,'create',self._cr.dbname)
 		return record
 
 	@api.one
 	def unlink(self):
 		record = super(stock_picking,self).unlink()
 		print(self)
-		send_webhook( self.id,self._inherit,'unlink')
+		send_webhook( self.id,self._inherit,'unlink',self._cr.dbname)
 		return record		
 
 	@api.one
 	def write(self, vals):
 		record = super(stock_picking, self).write(vals)
-		send_webhook( self.id,self._inherit,'write')
+		send_webhook( self.id,self._inherit,'write',self._cr.dbname)
 		return record
 
 
@@ -89,17 +89,17 @@ class stock_quant(models.Model):
 	@api.model
 	def create(self, vals):
 		record = super(stock_quant,self).create(vals)
-		send_webhook( record.id,self._inherit,'create')
+		send_webhook( record.id,self._inherit,'create',self._cr.dbname)
 		return record
 
 	@api.one
 	def unlink(self):
 		record = super(stock_quant,self).unlink()
-		send_webhook( self.id,self._inherit,'unlink')
+		send_webhook( self.id,self._inherit,'unlink',self._cr.dbname)
 		return record		
 
 	@api.one
 	def write(self, vals):
 		record = super(stock_quant, self).write(vals)
-		send_webhook( self.id,self._inherit,'write')
+		send_webhook( self.id,self._inherit,'write',self._cr.dbname)
 		return record
