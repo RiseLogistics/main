@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+            string="Proof of Delivery"
+            id="action_report_proof_of_delivery"
+            model="stock.picking"
+            report_type="qweb-pdf"
+            name="rise_brand_delivery_report.report_proof_of_delivery"
+            file="rise_brand_delivery_report.report_proof_of_delivery"
+            print_report_name="'Proof of Delivery'"
+        />
+    </data>
+
+    <record id="report_proof_of_delivery" model="ir.ui.view">
+        <field name="name">stock.picking.proof.delivery.signature</field>
+        <field name="model">stock.picking</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="stock.report_picking"/>
+        <field name="arch" type="xml">
+            <xpath expr="//p[@t-field='o.note']" position="after">
+                   <div class="clearfix mb32 mt64">
+                    <div class="row" name="total">
+                        <div class="col-xs-4 pull-right">
+                            <table class="table-condensed" style="min-width: 200px;max-width: 350px;">
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <strong>Proof of Delivery:</strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Recieved By:</strong></td>
+                                    <td style="border-bottom: 1px solid black;"></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Recieved On:</strong></td>
+                                    <td style="border-bottom: 1px solid black;"></td>
+                                </tr>
+                                <tr>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

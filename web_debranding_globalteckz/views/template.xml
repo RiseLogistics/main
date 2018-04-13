@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="assets_backend" name="load_desert_js_and_css_assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+            	<link rel="stylesheet" href="/web_debranding_globalteckz/static/css/backend_style.css"/>
+                <script type="text/javascript" src="/web_debranding_globalteckz/static/src/js/rebranding.js"></script>
+            </xpath>
+        </template>
+        
+    </data>
+</odoo>
