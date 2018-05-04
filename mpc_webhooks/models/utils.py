@@ -16,7 +16,7 @@ def send_webhook(id,model,trigger,dbname=None):
 
 		payload = {'model':model,'id':id,'trigger':trigger}
 
-		_logger.info("sending webhook notification to: " + webhook_url)
+		_logger.info("send webhook notification to: " + webhook_url)
 		_logger.info(payload)
 
 		r = requests.post( webhook_url ,data=json.dumps(payload),headers={'Content-Type': 'application/json'})
