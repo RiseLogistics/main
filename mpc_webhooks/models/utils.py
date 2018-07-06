@@ -39,7 +39,7 @@ def send_webhook(id, model, trigger, dbname=None):
             async_list.append(async_task)
 
         # fire async tasks
-            grequests.map(async_list)
+        grequests.map(async_list)
 
     except Exception as error :
         _logger.info("error sending webhook: " + str(error))
