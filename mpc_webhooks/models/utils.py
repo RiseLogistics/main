@@ -35,7 +35,7 @@ def send_webhook(id, model, trigger, dbname=None):
 
         _logger.info("Payload[{0}] - ENV{1}".format(payload, env_type))
 
-        with ThreadPoolExecutor(max_workers=1) as executor:
+        with ThreadPoolExecutor(max_workers=3) as executor:
             for url in urls:
                 executor.submit(_post, url, payload)
 
