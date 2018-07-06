@@ -1,9 +1,16 @@
 from odoo import fields, models, api
 import logging
-import grequests
 import json
 
+import requests
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
 _logger = logging.getLogger(__name__)
+
+
+def _post(url, payload):
+    _logger.info("Calling Webhook [{0}]".format(url))
+    requests.post(url, json=payload, headers={"Content-Type": "application/json"})
 
 
 def send_webhook(id, model, trigger, dbname=None):
@@ -26,20 +33,13 @@ def send_webhook(id, model, trigger, dbname=None):
         payload = {'model': model, 'id': id, 'trigger': trigger}
         urls = [webhook_url, leaflink_webhook_url]
 
-        async_list = []
-        for url in urls:
-            _logger.info("sending webhook notification [{0}] ENV{1}"
-                         .format(url, env_type))
-            _logger.info(payload)
+        _logger.info("Payload[{0}] - ENV{1}".format(payload, env_type))
 
-            async_task = grequests.post(webhook_url,
-                                    data=json.dumps(payload),
-                                    headers={'Content-Type': 'application/json'})
-            # queue async calls
-            async_list.append(async_task)
-
-        # fire async tasks
-        grequests.map(async_list)
+        with ThreadPoolExecutor(max_workers=1) as executor:
+            for url in urls:
+                executor.submit(_post, url, payload)
 
     except Exception as error :
         _logger.info("error sending webhook: " + str(error))
+
+
