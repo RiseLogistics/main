@@ -5,9 +5,6 @@ import json
 import requests
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-import trollius as asyncio
-from trollius import From
-
 _logger = logging.getLogger(__name__)
 
 
@@ -15,15 +12,8 @@ def _post(url, payload):
     _logger.info("Calling Webhook [{0}]".format(url))
     requests.post(url, json=payload, headers={"Content-Type": "application/json"}, timeout=10)
 
+
 def send_webhook(id, model, trigger, dbname=None):
-    loop = asyncio.get_event_loop()
-    tasks = [asyncio.async(_do_send_webhook(id, model, trigger, dbname))]
-    loop.run_until_complete(asyncio.wait(tasks))
-    loop.close()
-
-
-@asyncio.coroutine
-def _do_send_webhook(id, model, trigger, dbname=None):
     try:
         env_type = None
         webhook_url = None
@@ -47,7 +37,7 @@ def _do_send_webhook(id, model, trigger, dbname=None):
 
         with ThreadPoolExecutor(max_workers=2) as executor:
             for url in urls:
-                yield From(executor.submit(_post, url, payload))
+                executor.submit(_post, url, payload)
 
     except Exception as error :
         _logger.info("error sending webhook: " + str(error))
