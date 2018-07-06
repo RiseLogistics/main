@@ -1,6 +1,6 @@
 from odoo import fields, models, api
 import logging
-from requests import async
+import grequests
 import json
 
 _logger = logging.getLogger(__name__)
@@ -32,14 +32,14 @@ def send_webhook(id, model, trigger, dbname=None):
                          .format(url, env_type))
             _logger.info(payload)
 
-            async_task = async.post(webhook_url,
+            async_task = grequests.post(webhook_url,
                                     data=json.dumps(payload),
                                     headers={'Content-Type': 'application/json'})
             # queue async calls
             async_list.append(async_task)
 
         # fire async tasks
-        async.map(async_list)
+            grequests.map(async_list)
 
     except Exception as error :
         _logger.info("error sending webhook: " + str(error))
