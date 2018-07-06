@@ -1,35 +1,45 @@
 from odoo import fields, models, api
 import logging
-import requests
+from requests import async
 import json
+
 _logger = logging.getLogger(__name__)
 
 
-def send_webhook(id,model,trigger,dbname=None):
-	try:
-		webhook_url = None
-		leaflink_webhook_url = ("https://leaflink-{0}-riselogistics.herokuapp.com"
+def send_webhook(id, model, trigger, dbname=None):
+    try:
+        env_type = None
+        webhook_url = None
+        leaflink_webhook_url = ("https://leaflink-{0}-riselogistics.herokuapp.com"
                                 "/webhooks/odoo/1RL3137258415e5dee668438702cdd5b24ef158ce5575e")
 
-		if "staging" in dbname:
-			webhook_url = "https://rise-online.herokuapp.com/api/v3/webhooks/odoo"
-			leaflink_webhook_url = leaflink_webhook_url.format("stage")
+        if "staging" in dbname:
+            webhook_url = "https://rise-online.herokuapp.com/api/v3/webhooks/odoo"
+            leaflink_webhook_url = leaflink_webhook_url.format("stage")
+            env_type = "[STAGING]"
 
-		else:
-			webhook_url = "https://rise-logistics.herokuapp.com/api/v3/webhooks/odoo"
-			leaflink_webhook_url = leaflink_webhook_url.format("prod")
+        else:
+            webhook_url = "https://rise-logistics.herokuapp.com/api/v3/webhooks/odoo"
+            leaflink_webhook_url = leaflink_webhook_url.format("prod")
+            env_type = "[PRODUCTION]"
 
-		payload = {'model':model,'id':id,'trigger':trigger}
+        payload = {'model': model, 'id': id, 'trigger': trigger}
+        urls = [webhook_url, leaflink_webhook_url]
 
-		_logger.info("sending webhook notification to: " + webhook_url)
-		_logger.info(payload)
+        async_list = []
+        for url in urls:
+            _logger.info("sending webhook notification [{0}] ENV{1}"
+                         .format(url, env_type))
+            _logger.info(payload)
 
-		r = requests.post( webhook_url ,data=json.dumps(payload),headers={'Content-Type': 'application/json'})
+            async_task = async.post(webhook_url,
+                                    data=json.dumps(payload),
+                                    headers={'Content-Type': 'application/json'})
+            # queue async calls
+            async_list.append(async_task)
 
-		_logger.info("sending LeafLink webhook notification to: " + leaflink_webhook_url)
-		requests.post(leaflink_webhook_url,
-                      json=payload,
-                      headers={'Content-Type': 'application/json'})
+        # fire async tasks
+        async.map(async_list)
 
-	except Exception as error:
-		_logger.info("error sending webhook: " + str(error))
+    except Exception as error :
+        _logger.info("error sending webhook: " + str(error))
