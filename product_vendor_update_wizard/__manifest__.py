@@ -4,7 +4,7 @@
     'description': "A wizard to assist in mass updating product vendors",
     'summary': 'Product Vendor wizard',
     'author': 'Yazan H',
-    'version': '1.1',
+    'version': '1.0',
     'depends': [
         'stock',
         'product'
