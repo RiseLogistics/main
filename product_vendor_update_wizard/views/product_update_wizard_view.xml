@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="product_vendor_update_wizard" model="ir.ui.view">
+        <field name="name">Product Vendor Update Wizard</field>
+        <field name="model">product.vendor.update.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="new_vendor" required="1"/>
+                    <field name="new_brand" />
+                </group>
+
+                <separator />
+
+                <field name="product_tmp_ids" >
+                    <tree string="Products" edit="0" editable="false">
+                        <field name="id" required="1" readonly="1"/>
+                        <field name="default_code" required="1" readonly="1"/>
+                        <field name="name" required="1" readonly="1"/>
+                        <field name="x_studio_field_jbJcD" required="1" readonly="1" string="Vendor" />
+                        <field name="x_studio_field_pHWCf" required="1" readonly="1" string="Brand" />
+                    </tree>
+                </field>
+
+                <separator />
+                <group>
+                    <field name="pin" required="1"/>
+                </group>
+
+                <separator />
+                <footer>
+                    <button type="object" name="process_update"
+                            string="Update Products" class="oe_highlight" />
+
+                    <button special="cancel" string="Cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+     <act_window id="action_product_vendor_update_wizard"
+                name="Update Vendor/Brand"
+                src_model="product.template"
+                res_model="product.vendor.update.wizard"
+                view_mode="form"
+                target="new"
+                multi="True" />
+
+
+</odoo>

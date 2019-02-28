@@ -1,0 +1,20 @@
+venv/
+__pycache__/
+*.py[cod]
+.env
+online.env
+ngrok
+# exclude everything
+tmp/*
+scripts/*
+.idea/workspace.xml
+Vagrantfile
+.vagrant
+.idea/*
+.local_dev_yazan/*
+var.env
+
+# exception to the rule
+!tmp/.gitkeep
+.DS_Store
+
