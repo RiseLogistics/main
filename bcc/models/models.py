@@ -191,6 +191,16 @@ class ResPartner(models.Model):
         return lic_rec.ids
 
     @api.multi
+    def is_bcc_valid(self):
+        is_valid = False
+
+        for bcc in self.bcc_license_data:
+            if bcc.status == "Active":
+                is_valid = True
+
+        return is_valid
+
+    @api.multi
     def _unlink_licenses(self):
         log.info("Assigning license for %s" % self.name)
 
@@ -220,5 +230,7 @@ class SaleOrderBCCValidator(models.Model):
 
     @api.multi
     def action_button_confirm(self):
-        # if self.
+        if not self.partner_id.is_bcc_valid():
+            raise Exception("Partner not BCC compliant!")
+
         return super(SaleOrderBCCValidator, self).action_button_confirm()
