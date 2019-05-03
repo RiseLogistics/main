@@ -233,4 +233,4 @@ class SaleOrderBCCValidator(models.Model):
             raise exceptions.Warning("Partner NOT BCC compliant. "
                                      "Must have at least one active license to place an SO.")
 
-        return super(SaleOrderBCCValidator, self).action_button_confirm()
+        return super(SaleOrderBCCValidator, self).action_confirm()
