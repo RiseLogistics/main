@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api, _
+from odoo import exceptions
+
 import requests
 import logging
 import datetime
@@ -8,7 +10,6 @@ import datetime
 from .. import env
 
 log = logging.getLogger(__name__)
-
 
 STATES = [
     ("Pending", "Pending BCC Status Update"),
@@ -26,7 +27,6 @@ STATES = [
     ("Other", "Other")
 ]
 
-
 LICENSE_USE_TYPES = [
     ("Pending", "Pending BCC Status Update"),
     ("Adult-Use", "Adult-Use"),
@@ -34,7 +34,6 @@ LICENSE_USE_TYPES = [
     ("BOTH", "Adult/Medicinal"),
     ("N/A", "N/A")
 ]
-
 
 BUSINESS_STRUCTURES = [
     ("Pending", "Pending BCC Status Update"),
@@ -51,7 +50,7 @@ class BCCLicenseModel(models.Model):
 
     _sql_constraints = [
         ("license_number", "unique (license_number)", "Duplicate License Number!")]
-    
+
     business_owner = fields.Char(default="TBD", ondelete="restrict")
     business_contact_information = fields.Char(
         default="TBD",
@@ -128,7 +127,7 @@ class BCCLicenseModel(models.Model):
                     "expiration_date": self.expiration_date,
                     "partner": "%s - %s" % (partner.name, partner.id),
                     "warning_2weeks": self.status.upper() == "ACTIVE" and expires_soon
-            })
+                })
 
                 log.warn("Alerting Expired License[%s] - RESPONSE_STATUS[%s]"
                          % (self.license_type, res.status_code))
@@ -152,7 +151,7 @@ class ResPartner(models.Model):
     _inherit = "res.partner"
 
     bcc_license_data = fields.Many2many("bcc.license")
-    can_place_so = fields.Boolean(default=False)
+    # can_place_so = fields.Boolean(default=False)
 
     filter_on = fields.Char(
         string="Filter on license",
@@ -231,11 +230,7 @@ class SaleOrderBCCValidator(models.Model):
     @api.multi
     def action_confirm(self):
         if not self.partner_id.is_bcc_valid():
-            return {"warning": {
-                "title": "Warning!",
-                "message": "Partner NOT BCC compliant. "
-                           "Must have at least one active license to place an SO."}
-
-            }
+            raise exceptions.Warning("Partner NOT BCC compliant. "
+                                     "Must have at least one active license to place an SO.")
 
         return super(SaleOrderBCCValidator, self).action_button_confirm()
