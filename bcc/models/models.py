@@ -229,8 +229,13 @@ class SaleOrderBCCValidator(models.Model):
     _inherit = "sale.order"
 
     @api.multi
-    def action_button_confirm(self):
+    def action_confirm(self):
         if not self.partner_id.is_bcc_valid():
-            raise Exception("Partner not BCC compliant!")
+            return {"warning": {
+                "title": "Warning!",
+                "message": "Partner NOT BCC compliant. "
+                           "Must have at least one active license to place an SO."}
+
+            }
 
         return super(SaleOrderBCCValidator, self).action_button_confirm()
