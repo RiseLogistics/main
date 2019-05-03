@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><odoo>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="bcc.list">
+      <field name="name">BCC list</field>
+      <field name="model">bcc.license</field>
+      <field name="arch" type="xml">
+        <tree colors="red:status!='Active';green:status=='Active'">
+          <field name="license_number"/>
+          <field name="license_type"/>
+          <field name="allowed_use_type"/>
+          <field name="status"/>
+          <field name="partner_id"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="bcc.action_window">
+      <field name="name">BCC Licenses</field>
+      <field name="res_model">bcc.license</field>
+      <field name="view_mode">tree,form</field>
+      <field name="sequence">1000</field>
+    </record>
+
+
+    <!-- server action to the one above -->
+
+    <record model="ir.actions.server" id="bcc.action_server">
+      <field name="name">BCC server</field>
+      <field name="model_id" ref="model_bcc_license"/>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+
+
+    <!-- Top menu item -->
+
+    <menuitem name="BCC" id="bcc.menu_root"/>
+
+    <!-- menu categories -->
+
+    <menuitem name="License Info" id="bcc.menu_1" parent="bcc.menu_root"/>
+
+    <menuitem name="List" id="bcc.menu_1_list" parent="bcc.menu_1"
+              action="bcc.action_window"/>
+
+</odoo>
