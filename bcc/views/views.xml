@@ -47,7 +47,6 @@
             <search string="BCC License Data">
                 <field name="license_number" string="License Number"/>
                 <field name="partner_id" string="Partner" help="Assigned Partners"/>
-                <field name="location_id" string="Parent Location"/>
 
                 <separator/>
                 <filter name="partner_id" string="Assigned Licenses" domain="[('partner_id', '!=', False)]" help="Filter on Active licenses"/>
