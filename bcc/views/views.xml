@@ -46,7 +46,6 @@
         <field name="arch" type="xml">
             <search string="BCC License Data">
                 <field name="license_number" string="License Number"/>
-                <field name="partner_id" string="Partner" help="Assigned Partners"/>
 
                 <separator/>
                 <filter name="partner_id" string="Assigned Licenses" domain="[('partner_id', '!=', False)]" help="Filter on Active licenses"/>
