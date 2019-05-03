@@ -139,8 +139,6 @@ class BCCLicenseModel(models.Model):
         pass
 
     def _search_filter_field(self, operator, value):
-        log.warning("SEARCHING %s" % value)
-
         records = self.search([])
         ids = []
         if operator == 'ilike':
@@ -207,8 +205,6 @@ class ResPartner(models.Model):
         pass
 
     def _search_filter_field(self, operator, value):
-        log.warning("SEARCHING %s" % value)
-
         all_partners = self.search([])
         ids = []
         if operator == 'ilike':
@@ -217,3 +213,12 @@ class ResPartner(models.Model):
             ).mapped('id')
 
         return [('id', 'in', ids)]
+
+
+class SaleOrderBCCValidator(models.Model):
+    _inherit = "sale.order"
+
+    @api.multi
+    def action_button_confirm(self):
+        # if self.
+        return super(SaleOrderBCCValidator, self).action_button_confirm()

@@ -2,7 +2,7 @@
     <!-- explicit list view definition -->
 
     <record model="ir.ui.view" id="bcc.list">
-      <field name="name">BCC list</field>
+      <field name="name">BCC List</field>
       <field name="model">bcc.license</field>
       <field name="arch" type="xml">
         <tree colors="red:status!='Active';green:status=='Active'">
@@ -10,7 +10,7 @@
           <field name="license_type"/>
           <field name="allowed_use_type"/>
           <field name="status"/>
-          <field name="partner_id"/>
+          <field name="partner_id"  widget="many2many_tags"/>
         </tree>
       </field>
     </record>
@@ -38,6 +38,27 @@
           "res_model": self._name,
         }
       </field>
+    </record>
+
+    <record id="view_bcc_search" model="ir.ui.view">
+        <field name="name">bcc.license.search</field>
+        <field name="model">bcc.license</field>
+        <field name="arch" type="xml">
+            <search string="BCC License Data">
+                <field name="license_number" string="License Number"/>
+                <field name="partner_id" string="Partner" help="Assigned Partners"/>
+                <field name="location_id" string="Parent Location"/>
+
+                <separator/>
+                <filter name="partner_id" string="Assigned Licenses" domain="[('partner_id', '!=', False)]" help="Filter on Active licenses"/>
+
+                <separator/>
+                <filter name="status" string="Active License" domain="[('status', '=', 'Active')]" help="Filter on Active licenses"/>
+
+                <separator/>
+                <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
+            </search>
+        </field>
     </record>
 
 
