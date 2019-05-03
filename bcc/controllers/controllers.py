@@ -88,14 +88,14 @@ class Bcc(http.Controller):
                 log.warn("Found expired License %s for %s"
                          % (pl["license_number"], partner.id))
 
-                # self._trigger_exp_license_alert(rec, pl)
+                self._trigger_exp_license_alert(rec, pl)
 
         if 14 >= expires_in > 0 and pl["status"] and pl["status"].upper() == "ACTIVE":
             for rec in recs:
                 log.warn("Found 2-week License expiration %s for %s"
                          % (pl["license_number"], partner.id))
 
-                # self._trigger_exp_license_alert(rec, pl, warn=True)
+                self._trigger_exp_license_alert(rec, pl, warn=True)
 
         return recs.ids
 
@@ -103,18 +103,18 @@ class Bcc(http.Controller):
         log.warn("Alerting[%s] - %s - %s"
                  % (payload["license_type"], partner.name, partner.id))
 
-        # res = requests.post(env.ALERT_ENDPOINT, json={
-        #     "license_number": payload["license_number"],
-        #     "status": payload["status"],
-        #     "issue_date": payload["issue_date"],
-        #     "license_type": payload["license_type"],
-        #     "activity": payload["activities"],
-        #     "expiration_date": payload["expiration_date"],
-        #     "partner": "%s - %s" % (partner.name, partner.id),
-        #     "warning_2weeks": warn
-        # })
-        #
-        # log.warn("Alerting[%s] - RESPONSE_STATUS[%s]" % (payload["license_type"], res.status_code))
+        res = requests.post(env.ALERT_ENDPOINT, json={
+            "license_number": payload["license_number"],
+            "status": payload["status"],
+            "issue_date": payload["issue_date"],
+            "license_type": payload["license_type"],
+            "activity": payload["activities"],
+            "expiration_date": payload["expiration_date"],
+            "partner": "%s - %s" % (partner.name, partner.id),
+            "warning_2weeks": warn
+        })
+
+        log.warn("Alerting[%s] - RESPONSE_STATUS[%s]" % (payload["license_type"], res.status_code))
 
     def _auth(self, body):
         try:
