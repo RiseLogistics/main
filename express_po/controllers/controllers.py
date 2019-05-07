@@ -87,7 +87,7 @@ class ExpressPOController(http.Controller):
         lots = http.request.env["stock.production.lot"].sudo()
 
         lot_record = lots.create({
-            "name": str(item["batch_number"] + str(datetime.datetime.now())),
+            "name": item["batch_number"],
             "product_id": item["product"]["id"],
             "product_uom_id": item["unit"]["id"]
         })
