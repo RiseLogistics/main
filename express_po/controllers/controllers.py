@@ -3,7 +3,6 @@
 import logging
 from odoo import http, exceptions
 import requests
-import datetime
 import base64
 
 from .env import ODOO_TOKEN
@@ -22,7 +21,8 @@ class ExpressPOController(http.Controller):
         po = http.request.env["purchase.order"].sudo()
 
         try:
-            return self._handle_po_creation(po, payload)
+            po = self._handle_po_creation(po, payload)
+            return {"po_id": po.id, "po_name": po.name}
 
         except Exception as e:
             log.exception("Exception while in /po/new [%s]" % e)
@@ -78,7 +78,7 @@ class ExpressPOController(http.Controller):
             log.exception(e)
             raise exceptions.ValidationError("Error creating PO object {}".format(str(e)))
 
-        return po_id.id
+        return po_id
 
     def _create_batch(self, item):
         log.info("Creating batch for %s" % item["product"])
