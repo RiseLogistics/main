@@ -59,7 +59,7 @@ class ExpressPOController(http.Controller):
                     "coa_upload_filename": "{product} {batch} Certifcate of Analysis.pdf"
                                            .format(product=product["id"], batch=item["batch_number"]),
 
-                    "coa_upload": self._coa_url_to_base64(item["coa"]),
+                    "coa_upload": self._coa_url_to_base64(item.get("coa", None)),
                     "date_planned": payload["scheduled_date"],
                     "date_order": payload["pickup_date"],
                     "order_id": po_id.id,
@@ -98,6 +98,9 @@ class ExpressPOController(http.Controller):
         data = None
 
         try:
+            if not url:
+                return None
+
             data = base64.b64encode(requests.get(url.strip()).content).replace(b"\n", b"")
 
         except Exception as e:
