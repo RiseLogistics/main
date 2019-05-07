@@ -12,7 +12,7 @@ log = logging.getLogger(__name__)
 
 
 class ExpressPOController(http.Controller):
-    @http.route('/po/new/', auth='public', method=["POST"], type="json", csrf=False, cors="*")
+    @http.route("/po/new/", auth="public", method=["POST"], type="json", csrf=False, cors="*")
     def index(self, **kw):
         self._auth(http.request.params)
 
@@ -97,10 +97,10 @@ class ExpressPOController(http.Controller):
         data = None
 
         try:
-            data = base64.b64encode(requests.get(url.strip()).content).replace(b'\n', b'')
+            data = base64.b64encode(requests.get(url.strip()).content).replace(b"\n", b"")
 
         except Exception as e:
-            log.warn('There was a problem requesting the image from URL %s' % url)
+            log.warn("There was a problem requesting the COA from URL %s" % url)
             log.exception(e)
 
         return data
