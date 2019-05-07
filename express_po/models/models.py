@@ -39,10 +39,9 @@ class POStockMoveLine(models.Model):
             po_line = self.env["stock.move"].browse(vals["move_id"]).purchase_line_id
 
             if po_line:
-                vals["x_lot_id"] = po_line["lot_id"].id
+                vals["lot_id"] = po_line["lot_id"].id
                 vals["x_coa_upload"] = po_line["coa_upload"]
                 vals["x_coa_upload_filename"] = po_line["coa_upload_filename"]
-                vals["location_dest_id"] = po_line["location_dest_id"].id
-                vals["location_id"] = po_line["location_id"].id
+                vals["dyme_transfer_id"] = po_line["dyme_transfer_id"]
 
         return super(POStockMoveLine, self).create(vals)
