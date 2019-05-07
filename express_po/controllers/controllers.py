@@ -22,7 +22,7 @@ class ExpressPOController(http.Controller):
 
         try:
             po = self._handle_po_creation(po, payload)
-            return {"po_id": po.id, "po_name": po.name}
+            return {"po_id": po.id, "po_name": po.name, "picking_ids": po.picking_ids}
 
         except Exception as e:
             log.exception("Exception while in /po/new [%s]" % e)
