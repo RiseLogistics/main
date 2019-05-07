@@ -22,7 +22,8 @@ class POLineTopGun(models.Model):
     lot_id = fields.Many2one("stock.production.lot")
     location_id = fields.Many2one("stock.location")
     location_dest_id = fields.Many2one("stock.location")
-
+    dyme_transfer_id = fields.Char()
+    stock_picking_type_id = fields.Many2one("stock.picking.type")
     coa_upload = fields.Binary()
     coa_upload_filename = fields.Char()
 

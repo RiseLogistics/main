@@ -65,7 +65,7 @@ class ExpressPOController(http.Controller):
                     "location_dest_id": payload["location_dest_id"],
                     "location_id": payload["location_id"],
                     "dyme_transfer_id": payload["transfer_id"],
-                    "picking_type_id": payload["pick_type_id"],
+                    "stock_picking_type_id": payload["pick_type_id"],
                     "lot_id": self._create_batch(item)
                 })
 
