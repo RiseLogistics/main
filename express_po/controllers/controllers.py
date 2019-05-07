@@ -81,7 +81,6 @@ class ExpressPOController(http.Controller):
         return po_id.id
 
     def _create_batch(self, item):
-        import datetime
         log.info("Creating batch for %s" % item["product"])
 
         lots = http.request.env["stock.production.lot"].sudo()
