@@ -14,6 +14,7 @@ class POTopGun(models.Model):
     location_id = fields.Many2one("stock.location")
     location_dest_id = fields.Many2one("stock.location")
     dyme_transfer_id = fields.Char()
+    notes = fields.Char()
 
 
 class POLineTopGun(models.Model):

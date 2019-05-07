@@ -41,6 +41,7 @@ class ExpressPOController(http.Controller):
                 "dyme_transfer_id": payload["transfer_id"],
                 "location_dest_id": payload["location_dest_id"],
                 "location_id": payload["location_id"],
+                "notes": payload["notes"]
             })
 
             po_line = http.request.env["purchase.order.line"].sudo()
