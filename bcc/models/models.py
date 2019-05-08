@@ -140,11 +140,11 @@ class BCCLicenseModel(models.Model):
     def _search_filter_field(self, operator, value):
         records = self.search([])
         ids = []
-        if operator == 'ilike':
+        if operator == "ilike":
             ids = records.filtered(
-                lambda r: r.license_number in value).mapped('id')
+                lambda r: r.license_number in value).mapped("id")
 
-        return [('id', 'in', ids)]
+        return [("id", "in", ids)]
 
 
 class ResPartner(models.Model):
@@ -155,8 +155,14 @@ class ResPartner(models.Model):
 
     filter_on = fields.Char(
         string="Filter on license",
-        compute='_compute_filter_field',
-        search='_search_filter_field'
+        compute="_compute_filter_field",
+        search="_search_filter_field"
+    )
+
+    is_bcc_compliant = fields.Char(
+        string="Filter on BCC complaint partners",
+        compute="_compute_bcc_compliant_filter_field",
+        search="_search_bcc_compliant_filter_field"
     )
 
     @api.multi
@@ -216,12 +222,33 @@ class ResPartner(models.Model):
     def _search_filter_field(self, operator, value):
         all_partners = self.search([])
         ids = []
-        if operator == 'ilike':
+        if operator == "ilike":
             ids = all_partners.filtered(
                 lambda r: r.x_studio_field_K2J26 and (value in r.x_studio_field_K2J26)
-            ).mapped('id')
+            ).mapped("id")
 
-        return [('id', 'in', ids)]
+        return [("id", "in", ids)]
+
+    @api.multi
+    @api.depends()
+    def _compute_bcc_compliant_filter_field(self):
+        pass
+
+    def _search_bcc_compliant_filter_field(self, operator, value):
+        all_partners = self.search([])
+
+        ids = []
+        if operator == "=":
+            ids = all_partners.filtered(
+                lambda r: r.is_bcc_valid() == value
+            ).mapped("id")
+
+        if operator == "!=":
+            ids = all_partners.filtered(
+                lambda r: r.is_bcc_valid() != value
+            ).mapped("id")
+
+        return [("id", "in", ids)]
 
 
 class SaleOrderBCCValidator(models.Model):
