@@ -54,6 +54,8 @@
 
                 <separator/>
                 <filter name="partner_id" string="Assigned Licenses" domain="[('partner_id', '!=', False)]" help="Filter on Active licenses"/>
+                <filter name="is_bcc_compliant" string="BCC Complaint" domain="[('is_bcc_compliant', '!=', False)]" help="Filter on BCC compliant partners"/>
+                <filter name="is_bcc_compliant" string="Not BCC Complaint" domain="[('is_bcc_compliant', '=', False)]" help="Filter on non-BCC compliant (locked) partners"/>
 
                 <separator/>
                 <filter name="status" string="Active License" domain="[('status', '=', 'Active')]" help="Filter on Active licenses"/>
