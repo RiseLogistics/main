@@ -159,7 +159,7 @@ class ResPartner(models.Model):
         search="_search_filter_field"
     )
 
-    is_bcc_compliant = fields.Char(
+    is_bcc_compliant = fields.Boolean(
         string="Filter on BCC complaint partners",
         compute="_compute_bcc_compliant_filter_field",
         search="_search_bcc_compliant_filter_field"
