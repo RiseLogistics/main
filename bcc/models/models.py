@@ -13,52 +13,30 @@ log = logging.getLogger(__name__)
 
 STATES = [
     ("Pending", "Pending BCC Status Update"),
-    ("Active", "Active"),
-    ("Expired", "Expired"),
-    ("Revoked", "Revoked"),
-    ("Canceled", "Canceled"),
-    ("Suspended", "Suspended"),
-    ("Surrendered", "Surrendered"),
+    ("Active",)         * 2,
+    ("Expired",)        * 2,
+    ("Revoked",)        * 2,
+    ("Canceled",)       * 2,
+    ("Suspended",)      * 2,
+    ("Surrendered",),   * 2,
+    ("Delinquent",)     * 2,
+    ("FTB Suspension",) * 2,
+    ("Error",)          * 2,
+    ("Other",)          * 2
+
+    ("Family Support Suspension",) * 2,
     ("Military License Inactive", "Military - License Inactive"),
-    ("Delinquent", "Delinquent"),
-    ("Family Support Suspension", "Family Support Suspension"),
-    ("FTB Suspension", "FTB Suspension"),
-    ("Error", "Error"),
-    ("Other", "Other")
 ]
 
 LICENSE_USE_TYPES = [
     # BCC
     ("Pending", "Pending BCC Status Update"),
-    ("Adult-Use", "Adult-Use"),
-    ("Medicinal", "Medicinal"),
+    ("Adult-Use",) * 2,
+    ("Medicinal",) * 2,
     ("BOTH", "Adult/Medicinal"),
 
     # CDFA
-    ("Medium Indoor", "Medium Indoor"),
-    ("Medium Mixed-Light Tier 1", "Medium Mixed-Light Tier 1"),
-    ("Medium Mixed-Light Tier 2", "Medium Mixed-Light Tier 2"),
-    ("Medium Outdoor", "Medium Outdoor"),
-    ("Nursery", "Nursery"),
-    ("Processor", "Processor"),
-    ("Small Indoor", "Small Indoor"),
-    ("Small Mixed-Light Tier 1", "Small Mixed-Light Tier 1"),
-    ("Small Mixed-Light Tier 2", "Small Mixed-Light Tier 2"),
-    ("Small Outdoor", "Small Outdoor"),
-    ("Specialty Cottage Indoor", "Specialty Cottage Indoor"),
-    ("Specialty Cottage Mixed-Light Tier 1", "Specialty Cottage Mixed-Light Tier 1"),
-    ("Specialty Cottage Mixed-Light Tier 2", "Specialty Cottage Mixed-Light Tier 2"),
-    ("Specialty Cottage Outdoor", "Specialty Cottage Outdoor"),
-    ("Specialty Indoor", "Specialty Indoor"),
-    ("Specialty Mixed-Light Tier 1", "Specialty Mixed-Light Tier 1"),
-    ("Specialty Mixed-Light Tier 2", "Specialty Mixed-Light Tier 2"),
-
-    # MCSB
-    ("Type 6", "Type 6"),
-    ("Type 7", "Type 7"),
-    ("Type N", "Type N"),
-    ("Type P", "Type P"),
-    ("Type S", "Type S")
+    ("Temporary Cannabis Cultivation License",) * 2
 
     # other
     ("N/A", "N/A")
@@ -66,10 +44,10 @@ LICENSE_USE_TYPES = [
 
 BUSINESS_STRUCTURES = [
     ("Pending", "Pending BCC Status Update"),
-    ("Corporation", "Corporation"),
     ("Limited Liability Company", "Limited Liability Company"),
-    ("Sole Proprietorship", "Sole Proprietorship"),
-    ("General Partnership", "General Partnership"),
+    ("Sole Proprietorship",) * 2,
+    ("General Partnership",) * 2,
+    ("Corporation",)         * 2,
     ("DNE", "N/A")
 ]
 
@@ -180,7 +158,7 @@ class ResPartner(models.Model):
     _inherit = "res.partner"
 
     bcc_license_data = fields.Many2many("bcc.license")
-    # can_place_so = fields.Boolean(default=False)
+    force_so_creation = fields.Boolean(default=False)
 
     filter_on = fields.Char(
         string="Filter on license",
@@ -227,6 +205,10 @@ class ResPartner(models.Model):
     @api.multi
     def is_bcc_valid(self):
         is_valid = False
+
+        if self.force_so_creation:
+            log.warn("Forcing SO creation for partner %s" % self.id)
+            return True
 
         for bcc in self.bcc_license_data:
             if bcc.status == "Active":
