@@ -22,7 +22,7 @@ class ExpressPOController(http.Controller):
 
         try:
             po = self._handle_po_creation(po, payload)
-            return {"po_id": po.id, "po_name": po.name, "picking_ids": po.picking_ids.id}
+            return {"po_id": po.id, "po_name": po.name, "picking_ids": None}
 
         except Exception as e:
             log.exception("Exception while in /po/new [%s]" % e)
@@ -53,7 +53,7 @@ class ExpressPOController(http.Controller):
                 line_id = po_line.create({
                     "product_id": product["id"],
                     "name": product["name"],
-                    "price_unit": item["price"],
+                    "price_unit": item.get("price", 0),
                     "product_qty": item["quantity"],
                     "product_uom": item["unit"]["id"],
                     "coa_upload_filename": "{product} {batch} Certifcate of Analysis.pdf"
@@ -73,7 +73,7 @@ class ExpressPOController(http.Controller):
                 parsed_line_items.append(line_id.id)
 
             po_id.write({"order_line": [(6, 0, parsed_line_items)]})
-            po_id.button_confirm()
+            # po_id.button_confirm()
 
         except Exception as e:
             log.exception(e)

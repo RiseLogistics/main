@@ -28,10 +28,39 @@ STATES = [
 ]
 
 LICENSE_USE_TYPES = [
+    # BCC
     ("Pending", "Pending BCC Status Update"),
     ("Adult-Use", "Adult-Use"),
     ("Medicinal", "Medicinal"),
     ("BOTH", "Adult/Medicinal"),
+
+    # CDFA
+    ("Medium Indoor", "Medium Indoor"),
+    ("Medium Mixed-Light Tier 1", "Medium Mixed-Light Tier 1"),
+    ("Medium Mixed-Light Tier 2", "Medium Mixed-Light Tier 2"),
+    ("Medium Outdoor", "Medium Outdoor"),
+    ("Nursery", "Nursery"),
+    ("Processor", "Processor"),
+    ("Small Indoor", "Small Indoor"),
+    ("Small Mixed-Light Tier 1", "Small Mixed-Light Tier 1"),
+    ("Small Mixed-Light Tier 2", "Small Mixed-Light Tier 2"),
+    ("Small Outdoor", "Small Outdoor"),
+    ("Specialty Cottage Indoor", "Specialty Cottage Indoor"),
+    ("Specialty Cottage Mixed-Light Tier 1", "Specialty Cottage Mixed-Light Tier 1"),
+    ("Specialty Cottage Mixed-Light Tier 2", "Specialty Cottage Mixed-Light Tier 2"),
+    ("Specialty Cottage Outdoor", "Specialty Cottage Outdoor"),
+    ("Specialty Indoor", "Specialty Indoor"),
+    ("Specialty Mixed-Light Tier 1", "Specialty Mixed-Light Tier 1"),
+    ("Specialty Mixed-Light Tier 2", "Specialty Mixed-Light Tier 2"),
+
+    # MCSB
+    ("Type 6", "Type 6"),
+    ("Type 7", "Type 7"),
+    ("Type N", "Type N"),
+    ("Type P", "Type P"),
+    ("Type S", "Type S")
+
+    # other
     ("N/A", "N/A")
 ]
 
@@ -40,7 +69,8 @@ BUSINESS_STRUCTURES = [
     ("Corporation", "Corporation"),
     ("Limited Liability Company", "Limited Liability Company"),
     ("Sole Proprietorship", "Sole Proprietorship"),
-    ("General Partnership", "General Partnership")
+    ("General Partnership", "General Partnership"),
+    ("DNE", "N/A")
 ]
 
 
@@ -134,15 +164,14 @@ class BCCLicenseModel(models.Model):
 
     @api.multi
     @api.depends()
-    def _compute_filter_field(self):
-        pass
+    def _compute_filter_field(self): pass
 
     def _search_filter_field(self, operator, value):
         records = self.search([])
         ids = []
         if operator == "ilike":
             ids = records.filtered(
-                lambda r: r.license_number in value).mapped("id")
+                lambda r: r.license_number.upper() in value.upper()).mapped("id")
 
         return [("id", "in", ids)]
 
@@ -216,23 +245,21 @@ class ResPartner(models.Model):
 
     @api.multi
     @api.depends()
-    def _compute_filter_field(self):
-        pass
+    def _compute_filter_field(self): pass
 
     def _search_filter_field(self, operator, value):
         all_partners = self.search([])
         ids = []
         if operator == "ilike":
             ids = all_partners.filtered(
-                lambda r: r.x_studio_field_K2J26 and (value in r.x_studio_field_K2J26)
+                lambda r: r.x_studio_field_K2J26 and (value.upper() in r.x_studio_field_K2J26.upper())
             ).mapped("id")
 
         return [("id", "in", ids)]
 
     @api.multi
     @api.depends()
-    def _compute_bcc_compliant_filter_field(self):
-        pass
+    def _compute_bcc_compliant_filter_field(self): pass
 
     def _search_bcc_compliant_filter_field(self, operator, value):
         all_partners = self.search([])
