@@ -18,11 +18,11 @@ STATES = [
     ("Revoked",)        * 2,
     ("Canceled",)       * 2,
     ("Suspended",)      * 2,
-    ("Surrendered",),   * 2,
+    ("Surrendered",)    * 2,
     ("Delinquent",)     * 2,
     ("FTB Suspension",) * 2,
     ("Error",)          * 2,
-    ("Other",)          * 2
+    ("Other",)          * 2,
 
     ("Family Support Suspension",) * 2,
     ("Military License Inactive", "Military - License Inactive"),
@@ -36,7 +36,7 @@ LICENSE_USE_TYPES = [
     ("BOTH", "Adult/Medicinal"),
 
     # CDFA
-    ("Temporary Cannabis Cultivation License",) * 2
+    ("Temporary Cannabis Cultivation License",) * 2,
 
     # other
     ("N/A", "N/A")
@@ -44,10 +44,10 @@ LICENSE_USE_TYPES = [
 
 BUSINESS_STRUCTURES = [
     ("Pending", "Pending BCC Status Update"),
-    ("Limited Liability Company", "Limited Liability Company"),
-    ("Sole Proprietorship",) * 2,
-    ("General Partnership",) * 2,
-    ("Corporation",)         * 2,
+    ("Limited Liability Company",)  * 2,
+    ("Sole Proprietorship",)        * 2,
+    ("General Partnership",)        * 2,
+    ("Corporation",)                * 2,
     ("DNE", "N/A")
 ]
 
