@@ -13,6 +13,7 @@ Vagrantfile
 .idea/*
 .local_dev_yazan/*
 var.env
+.idea/
 
 # exception to the rule
 !tmp/.gitkeep

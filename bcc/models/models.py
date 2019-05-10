@@ -158,7 +158,7 @@ class ResPartner(models.Model):
     _inherit = "res.partner"
 
     bcc_license_data = fields.Many2many("bcc.license")
-    force_so_creation = fields.Boolean(default=False)
+    force_so_creation = fields.Boolean(default=False, string="Force SO creation")
 
     filter_on = fields.Char(
         string="Filter on license",
