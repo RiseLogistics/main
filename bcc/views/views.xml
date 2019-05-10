@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?><odoo>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="bcc.list">
+      <field name="name">BCC List</field>
+      <field name="model">bcc.license</field>
+      <field name="arch" type="xml">
+        <tree colors="red:status!='Active';green:status=='Active'">
+          <field name="license_number"/>
+          <field name="license_type"/>
+          <field name="allowed_use_type"/>
+          <field name="status"/>
+          <field name="partner_id"  widget="many2many_tags"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="bcc.action_window">
+      <field name="name">BCC Licenses</field>
+      <field name="res_model">bcc.license</field>
+      <field name="view_mode">tree,form</field>
+      <field name="sequence">1000</field>
+    </record>
+
+
+    <!-- server action to the one above -->
+
+    <record model="ir.actions.server" id="bcc.action_server">
+      <field name="name">BCC server</field>
+      <field name="model_id" ref="model_bcc_license"/>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+
+    <record id="view_bcc_search" model="ir.ui.view">
+        <field name="name">bcc.license.search</field>
+        <field name="model">bcc.license</field>
+        <field name="arch" type="xml">
+            <search string="BCC License Data">
+                <field name="license_number" string="License Number"/>
+                <field name="partner_id" string="Partner"/>
+                <field name="expiration_date" string="Expiration Date"/>
+                <field name="business_contact_information" string="BCC Contact Information"/>
+                <field name="status" string="License Status"/>
+                <field name="business_owner" string="Business Owner" />
+
+                <separator/>
+                <filter name="partner_id" string="Assigned Licenses" domain="[('partner_id', '!=', False)]" help="Filter on Active licenses"/>
+
+                <separator/>
+                <filter name="status" string="Active License" domain="[('status', '=', 'Active')]" help="Filter on Active licenses"/>
+                <filter name="status" string="Group by status"  context="{'group_by' : 'status'}" />
+
+                <separator/>
+                <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
+
+            </search>
+        </field>
+    </record>
+
+
+    <!-- Top menu item -->
+
+    <menuitem name="BCC" id="bcc.menu_root"/>
+
+    <!-- menu categories -->
+
+    <menuitem name="License Info" id="bcc.menu_1" parent="bcc.menu_root"/>
+
+    <menuitem name="List" id="bcc.menu_1_list" parent="bcc.menu_1"
+              action="bcc.action_window"/>
+
+</odoo>
