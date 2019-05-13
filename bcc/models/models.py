@@ -3,6 +3,7 @@
 from odoo import models, fields, api, _
 from odoo import exceptions
 
+import pandas
 import requests
 import logging
 import datetime
@@ -55,7 +56,7 @@ BUSINESS_STRUCTURES = [
 
 
 def to_py_date(bcc_date):
-    return datetime.datetime.strptime(bcc_date, "%m/%d/%Y")
+    return pandas.to_datetime(bcc_date, infer_datetime_format=True)
 
 
 class BCCLicenseModel(models.Model):
