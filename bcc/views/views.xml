@@ -8,6 +8,7 @@
         <tree colors="red:status!='Active';green:status=='Active'">
           <field name="license_number"/>
           <field name="license_type"/>
+          <field name="business_contact_information" string="Contact Information"/>
           <field name="allowed_use_type"/>
           <field name="status"/>
           <field name="partner_id"  widget="many2many_tags"/>
@@ -48,7 +49,7 @@
                 <field name="license_number" string="License Number"/>
                 <field name="partner_id" string="Partner"/>
                 <field name="expiration_date" string="Expiration Date"/>
-                <field name="business_contact_information" string="BCC Contact Information"/>
+                <field name="business_contact_information" string="Contact Information"/>
                 <field name="status" string="License Status"/>
                 <field name="business_owner" string="Business Owner" />
 
