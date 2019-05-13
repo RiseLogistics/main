@@ -13,8 +13,8 @@ log = logging.getLogger(__name__)
 
 STATES = [
     ("Pending", "Pending BCC Status Update"),
-    ("Active",)             * 2,
     ("About to Expire", "About to Expire"),
+    ("Active",)         * 2,
     ("Inactive",)       * 2,
     ("Expired",)        * 2,
     ("Revoked",)        * 2,
@@ -267,7 +267,8 @@ class SaleOrderBCCValidator(models.Model):
 
     @api.multi
     def action_confirm(self):
-        if not self.partner_id.is_bcc_valid():
+        # x_studio_field_kVKl0 == created_by on Odoo
+        if not self.x_studio_field_kVKl0.is_bcc_valid():
             raise exceptions.Warning("Partner NOT BCC compliant. "
                                      "Must have at least one active license to place an SO.")
 
