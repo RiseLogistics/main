@@ -136,7 +136,7 @@ class BCCLicenseModel(models.Model):
                     "activity": self.activities,
                     "expiration_date": self.expiration_date,
                     "partner": "%s - %s" % (partner.name, partner.id),
-                    "warning_2weeks": self.status.upper() == "ACTIVE" and expires_soon
+                    "warning_2weeks": (self.status.upper() == "ACTIVE" || self.status.upper() == "About to Expire") and expires_soon
                 })
 
                 log.warn("Alerting Expired License[%s] - RESPONSE_STATUS[%s]"
@@ -210,10 +210,10 @@ class ResPartner(models.Model):
 
         if self.force_so_creation:
             log.warn("Forcing SO creation for partner %s" % self.id)
-            return True
+            is_valid = True
 
         for bcc in self.bcc_license_data:
-            if bcc.status == "Active":
+            if bcc.status == "Active" or bcc.status == "About to Expire":
                 is_valid = True
 
         return is_valid
