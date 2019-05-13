@@ -54,6 +54,10 @@ BUSINESS_STRUCTURES = [
 ]
 
 
+def to_py_date(bcc_date):
+    return datetime.datetime.strptime(bcc_date, "%m/%d/%Y")
+
+
 class BCCLicenseModel(models.Model):
     _name = 'bcc.license'
     _description = "BCC License Status"
@@ -215,7 +219,7 @@ class ResPartner(models.Model):
             is_valid = True
 
         for bcc in self.bcc_license_data:
-            expired = (bcc.expiration_date - today).days <= 0
+            expired = (to_py_date(bcc.expiration_date) - today).days <= 0
 
             if bcc.status == "Active" and not expired:
                 is_valid = True
