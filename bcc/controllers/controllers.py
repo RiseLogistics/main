@@ -32,15 +32,17 @@ class Bcc(http.Controller):
             log.exception("Exception while in /bcc/manage [%s]" % e)
             raise exceptions.ValidationError("Unable to handle BCC updates")
 
-    @http.route("/bcc/meta/<model('res.partner'):partner>", auth='public', method=["POST"],
+    @http.route("/bcc/meta/<int:partner_id>", auth='public', method=["POST"],
                 type="json", csrf=False, cors="*")
-    def partner_metadata(self, partner, token):
+    def partner_metadata(self, partner_id, token=None):
         log.info("Handling BCC license status")
         self._auth(http.request.params)
 
+        partner_model = http.request.env["res.partner"].sudo()
+        partner = partner_model.browse(partner_id)
+
         _res = {
             "can_purchase_so": partner.is_bcc_valid(),
-            "force_so_creation": partner.force_so_creation,
             "licenses": []
         }
 
