@@ -208,13 +208,15 @@ class ResPartner(models.Model):
     @api.multi
     def is_bcc_valid(self):
         is_valid = False
-        expired = (self.expiration_date - datetime.datetime.today()).days <= 0
+        today = datetime.datetime.today()
 
         if self.force_so_creation:
             log.warn("Forcing SO creation for partner %s" % self.id)
             is_valid = True
 
         for bcc in self.bcc_license_data:
+            expired = (bcc.expiration_date - today).days <= 0
+
             if bcc.status == "Active" and not expired:
                 is_valid = True
 
