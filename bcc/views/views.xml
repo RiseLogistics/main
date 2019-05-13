@@ -8,8 +8,6 @@
         <tree colors="red:status!='Active';green:status=='Active'">
           <field name="license_number"/>
           <field name="license_type"/>
-          <field name="business_contact_information" string="Contact Information"/>
-          <filed name="business_owner" />
           <field name="allowed_use_type"/>
           <field name="status"/>
           <field name="partner_id"  widget="many2many_tags"/>

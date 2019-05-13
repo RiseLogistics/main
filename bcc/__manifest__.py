@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 {
     'version': "0.1",
-    'name': "BCC License Scrapper Adapter",
-    'summary': "Board of Cannabis Compliance license scrapper",
+    'name': "License Scrapper Adapter",
+    'summary': "BCC, CDFA & MCSB license scrapper",
     'category': "Manufacturing",
     'images': [],
     'application': True,
@@ -37,6 +37,6 @@
 
     'description': """
     This tool allows the res.partner record to be extended, allowing us to store license status and information twice per day.
-    Please see https://aca5.accela.com/bcc/customization/bcc/cap/licenseSearch.aspx for more information.
+    Please see https://cannabis.ca.gov/check_a_license/ for more information.
 """
 }
