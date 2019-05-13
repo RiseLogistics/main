@@ -267,10 +267,13 @@ class SaleOrderBCCValidator(models.Model):
 
     @api.multi
     def action_confirm(self):
-        # x_studio_field_kVKl0 == created_by on Odoo
-        if (not self.x_studio_field_kVKl0.is_bcc_valid()
-                or self.partner_id.is_bcc_valid()):
-            raise exceptions.Warning("Partner NOT BCC compliant. "
+        # x_studio_field_kVKl0 == created_by[vendor[ on Odoo
+        if not self.x_studio_field_kVKl0.is_bcc_valid():
+            raise exceptions.Warning("Partner [Vendor] NOT BCC compliant. "
+                                     "Must have at least one active license to place an SO.")
+
+        if not self.partner_id.is_bcc_valid():
+            raise exceptions.Warning("Partner [Retailer] NOT BCC compliant. "
                                      "Must have at least one active license to place an SO.")
 
         return super(SaleOrderBCCValidator, self).action_confirm()
