@@ -13,7 +13,8 @@ log = logging.getLogger(__name__)
 
 STATES = [
     ("Pending", "Pending BCC Status Update"),
-    ("Active",)         * 2,
+    ("Active",)             * 2,
+    ("About to Expire", "Active"),
     ("Inactive",)       * 2,
     ("Expired",)        * 2,
     ("Revoked",)        * 2,
