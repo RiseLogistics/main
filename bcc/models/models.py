@@ -129,8 +129,8 @@ class BCCLicenseModel(models.Model):
         log.warn("Alerting Expired License [%s]" % self.license_type)
 
         today_date = datetime.datetime.today()
-        expires_soon = 14 >= (self.expiration_date - today_date).days > 0
-        expired = (self.expiration_date - today_date).days <= 0
+        expires_soon = 14 >= (to_py_date(self.expiration_date) - today_date).days > 0
+        expired = (to_py_date(self.expiration_date) - today_date).days <= 0
 
         if expired or self.status.upper() != "ACTIVE" or expires_soon:
             for partner in self.partner_id:
@@ -205,8 +205,8 @@ class ResPartner(models.Model):
 
         self._unlink_licenses()
 
-        # for rec in lic_rec:
-        #     rec.validate_license_status()
+        for rec in lic_rec:
+            rec.validate_license_status()
 
         return lic_rec.ids
 
