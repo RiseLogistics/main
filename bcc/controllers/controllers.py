@@ -43,6 +43,7 @@ class Bcc(http.Controller):
 
         _res = {
             "can_purchase_so": partner.is_bcc_valid(),
+            "force_so_creation": partner.force_so_creation,
             "licenses": []
         }
 
