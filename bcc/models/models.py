@@ -14,7 +14,7 @@ log = logging.getLogger(__name__)
 STATES = [
     ("Pending", "Pending BCC Status Update"),
     ("Active",)             * 2,
-    ("About to Expire", "Active"),
+    ("About to Expire", "About to Expire"),
     ("Inactive",)       * 2,
     ("Expired",)        * 2,
     ("Revoked",)        * 2,
@@ -136,7 +136,7 @@ class BCCLicenseModel(models.Model):
                     "activity": self.activities,
                     "expiration_date": self.expiration_date,
                     "partner": "%s - %s" % (partner.name, partner.id),
-                    "warning_2weeks": (self.status.upper() == "ACTIVE" || self.status.upper() == "About to Expire") and expires_soon
+                    "warning_2weeks": self.status.upper() == "ACTIVE" and expires_soon
                 })
 
                 log.warn("Alerting Expired License[%s] - RESPONSE_STATUS[%s]"
@@ -213,7 +213,7 @@ class ResPartner(models.Model):
             is_valid = True
 
         for bcc in self.bcc_license_data:
-            if bcc.status == "Active" or bcc.status == "About to Expire":
+            if bcc.status == "Active":
                 is_valid = True
 
         return is_valid
