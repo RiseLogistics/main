@@ -125,14 +125,14 @@ class BCCLicenseModel(models.Model):
             self.expiration_date)}
 
     @api.multi
-    def validate_license_status(self):
-        log.warn("Alerting Expired License [%s]" % self.license_type)
-
+    def validate_license_status(self, alert=True):
         today_date = datetime.datetime.today()
         expires_soon = 14 >= (to_py_date(self.expiration_date) - today_date).days > 0
         expired = (to_py_date(self.expiration_date) - today_date).days <= 0
 
-        if expired or self.status.upper() != "ACTIVE" or expires_soon:
+        if alert and (expired or self.status.upper() != "ACTIVE" or expires_soon):
+            log.warn("Alerting Expired/Soon to expire License [%s]" % self.license_type)
+
             for partner in self.partner_id:
                 res = requests.post(env.ALERT_ENDPOINT, json={
                     "license_number": self.license_number,
@@ -147,6 +147,8 @@ class BCCLicenseModel(models.Model):
 
                 log.warn("Alerting Expired License[%s] - RESPONSE_STATUS[%s]"
                          % (self.license_type, res.status_code))
+
+        return bool(not expired and self.status.upper() == "ACTIVE")
 
     @api.multi
     @api.depends()
@@ -186,7 +188,7 @@ class ResPartner(models.Model):
         lic_recs = self.onchange_license_number(
             vals.get("x_studio_field_K2J26", self.x_studio_field_K2J26))
 
-        lic_ids = lic_recs.ids
+        lic_ids = lic_recs and lic_recs.ids or False
         if lic_recs:
             vals["bcc_license_data"] = [(6, 0, lic_ids)]
 
@@ -196,8 +198,8 @@ class ResPartner(models.Model):
         res = super(ResPartner, self).write(vals)
 
         if lic_ids:
-            for rec in lic_rec:
-                rec.validate_license_status()
+            for rec in lic_recs:
+                log.warn("LIC %s" % rec.validate_license_status())
 
         return res
 
@@ -209,7 +211,7 @@ class ResPartner(models.Model):
 
         lic_rec = self.env["bcc.license"].search(
             [("filter_on", "ilike", "%{}%".format(license_number))])
-
+        log.warn(lic_rec)
         self._unlink_licenses()
 
         return lic_rec
@@ -233,7 +235,7 @@ class ResPartner(models.Model):
 
     @api.multi
     def _unlink_licenses(self):
-        log.info("Assigning license for %s" % self.name)
+        log.info("Unlinking licenses for %s" % self.name)
 
         # remove current licenses
         linked_licenses = self.env["bcc.license"].search([("partner_id", "in", self.id)])

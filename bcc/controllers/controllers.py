@@ -32,6 +32,28 @@ class Bcc(http.Controller):
             log.exception("Exception while in /bcc/manage [%s]" % e)
             raise exceptions.ValidationError("Unable to handle BCC updates")
 
+    @http.route("/bcc/meta/<model('res.partner'):partner>", auth='public', method=["POST"],
+                type="json", csrf=False, cors="*")
+    def partner_metadata(self, partner, token):
+        log.info("Handling BCC license status")
+        self._auth(http.request.params)
+
+        _res = {
+            "can_purchase_so": partner.is_bcc_valid(),
+            "licenses": []
+        }
+
+        for lic_rec in partner.bcc_license_data:
+            _res["licenses"].append({
+                "license_number": lic_rec.license_number,
+                "license_status": lic_rec.status,
+                "license_valid": lic_rec.validate_license_status(alert=False),
+                "license_issue_date": lic_rec.issue_date,
+                "license_expiration_date": lic_rec.expiration_date
+            })
+
+        return _res
+
     def _load_list(self, bcc, payload):
         modified_records = []
 
