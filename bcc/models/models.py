@@ -186,13 +186,20 @@ class ResPartner(models.Model):
         lic_recs = self.onchange_license_number(
             vals.get("x_studio_field_K2J26", self.x_studio_field_K2J26))
 
+        lic_ids = lic_recs.ids
         if lic_recs:
-            vals["bcc_license_data"] = [(6, 0, lic_recs)]
+            vals["bcc_license_data"] = [(6, 0, lic_ids)]
 
         else:
             vals["bcc_license_data"] = [(5,)]
 
-        return super(ResPartner, self).write(vals)
+        res = super(ResPartner, self).write(vals)
+
+        if lic_ids:
+            for rec in lic_rec:
+                rec.validate_license_status()
+
+        return res
 
     @api.multi
     def onchange_license_number(self, license_number):
@@ -205,10 +212,7 @@ class ResPartner(models.Model):
 
         self._unlink_licenses()
 
-        for rec in lic_rec:
-            rec.validate_license_status()
-
-        return lic_rec.ids
+        return lic_rec
 
     @api.multi
     def is_bcc_valid(self):
