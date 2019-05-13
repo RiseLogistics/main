@@ -125,8 +125,9 @@ class BCCLicenseModel(models.Model):
 
         today_date = datetime.datetime.today()
         expires_soon = 14 >= (self.expiration_date - today_date).days > 0
+        expired = (self.expiration_date - today_date).days <= 0
 
-        if self.status.upper() != "ACTIVE" or expires_soon:
+        if expired or self.status.upper() != "ACTIVE" or expires_soon:
             for partner in self.partner_id:
                 res = requests.post(env.ALERT_ENDPOINT, json={
                     "license_number": self.license_number,
@@ -207,13 +208,14 @@ class ResPartner(models.Model):
     @api.multi
     def is_bcc_valid(self):
         is_valid = False
+        expired = (self.expiration_date - datetime.datetime.today()).days <= 0
 
         if self.force_so_creation:
             log.warn("Forcing SO creation for partner %s" % self.id)
             is_valid = True
 
         for bcc in self.bcc_license_data:
-            if bcc.status == "Active":
+            if bcc.status == "Active" and not expired:
                 is_valid = True
 
         return is_valid
