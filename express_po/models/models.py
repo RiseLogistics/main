@@ -8,6 +8,11 @@ class ExpressPOModel(models.Model):
     _description = "Express PO Creator"
 
 
+class POStockPicking(models.Model):
+    _inherit = "stock.picking"
+
+    po_data_synced = fields.Boolean(default=False, index=True)
+
 class POTopGun(models.Model):
     _inherit = "purchase.order"
 
