@@ -24,7 +24,7 @@ def send_webhook(id, model, trigger, dbname=None):
                                 "/webhooks/odoo/1RL3137258415e5dee668438702cdd5b24ef158ce5575e")
 
         if "staging" in dbname:
-            webhook_url = "https://rise-online.herokuapp.com/api/v3/webhooks/odoo"
+            webhook_url = "https://rise-online-tmp-live.herokuapp.com/api/v3/webhooks/odoo"
             leaflink_webhook_url = leaflink_webhook_url.format("stage")
             env_type = "[STAGING]"
 
