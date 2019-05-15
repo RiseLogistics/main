@@ -11,7 +11,7 @@ class ExpressPOModel(models.Model):
 class POStockPicking(models.Model):
     _inherit = "stock.picking"
 
-    po_data_synced = fields.Boolean(default=False, index=True)
+    po_data_synced = fields.Boolean()
 
 class POTopGun(models.Model):
     _inherit = "purchase.order"
