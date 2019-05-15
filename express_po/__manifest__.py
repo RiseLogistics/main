@@ -26,7 +26,7 @@
     'post_init_hook': None,
     'uninstall_hook': None,
 
-    'auto_install': True,
+    'auto_install': False,
     'installable': True,
 
     'description': """
