@@ -49,11 +49,11 @@ class Bcc(http.Controller):
 
         for lic_rec in partner.bcc_license_data:
             _res["licenses"].append({
-                "license_number": lic_rec.license_number,
-                "license_status": lic_rec.status,
-                "license_valid": lic_rec.validate_license_status(alert=False),
-                "license_issue_date": lic_rec.issue_date,
-                "license_expiration_date": lic_rec.expiration_date,
+                "number": lic_rec.license_number,
+                "status": lic_rec.status,
+                "is_valid": lic_rec.validate_license_status(alert=False),
+                "issue_date": lic_rec.issue_date,
+                "expiration_date": lic_rec.expiration_date,
                 "type": lic_rec.license_type,
                 "allowed_use_type": lic_rec.allowed_use_type
             })
