@@ -42,7 +42,7 @@ class POStockMoveLine(models.Model):
     @api.multi
     def create(self, vals):
 
-        if vals["move_id"]:
+        if vals and vals.get("move_id", False):
             po_line = self.env["stock.move"].browse(vals["move_id"]).purchase_line_id
 
             if po_line:
