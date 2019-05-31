@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="UTF-8"?><odoo>
+
+<!-- Form & Tree views-->
+<!--=======================================================================-->
+
+
+    <!-- LeafLink Settings Tree -->
+    <record model="ir.ui.view" id="leaflink_connector.manager_settings_tree">
+      <field name="name">LeafLink Sync Settings Tree</field>
+      <field name="model">leaflink.manager.settings</field>
+      <field name="arch" type="xml">
+        <tree>
+            <field name="managed_brand_id"/>
+            <field name="active"/>
+            <field name="api_id" />
+            <field name="orders_sync_freq" />
+            <field name="products_sync_freq" />
+            <field name="orders_sync_freq" />
+            <field name="orders_sync_ts" readonly="1" />
+            <field name="products_sync_ts" readonly="1" />
+            <field name="partners_sync_ts" readonly="1" />
+        </tree>
+      </field>
+    </record>
+
+    <!-- LeafLink Settings Form -->
+    <record model="ir.ui.view" id="leaflink_connector.manager_settings_form">
+      <field name="name">LeafLink Sync Settings Form</field>
+      <field name="model">leaflink.manager.settings</field>
+      <field name="arch" type="xml">
+        <form>
+            <sheet>
+                <group string="Managed Brand">
+                    <field name="managed_brand_id"/>
+                    <field name="api_id"/>
+                </group>
+                <group string="Sync Frequency (seconds)">
+                    <group>
+                        <field name="orders_sync_freq" string="Orders"/>
+                    </group>
+                    <group>
+                        <field name="products_sync_freq" string="Products"/>
+                    </group>
+                    <group>
+                        <field name="partners_sync_freq" string="Partners"/>
+                    </group>
+                    <group helper="Will skip sync if unchecked">
+                        <field name="active"/>
+                    </group>
+                </group>
+                <group>
+                    <group string="Sync Last Updated">
+                        <field name="orders_sync_ts" readonly="1"/>
+                        <field name="products_sync_ts" readonly="1"/>
+                        <field name="orders_sync_ts" readonly="1"/>
+                    </group>
+                </group>
+            </sheet>
+
+        </form>
+      </field>
+    </record>
+
+    <!-- EVD -->
+
+    <!-- LeafLink Brands Tree -->
+     <record model="ir.ui.view" id="leaflink_connector.manager_brands_tree">
+      <field name="name">LeafLink Brands Tree</field>
+      <field name="model">leaflink.manager.brand</field>
+      <field name="arch" type="xml">
+        <tree>
+            <field name="internal_brand_id" />
+            <field name="external_id" />
+            <field name="external_slug" />
+        </tree>
+      </field>
+    </record>
+
+    <!-- LeafLink Brands Form -->
+    <record model="ir.ui.view" id="leaflink_connector.manager_brands_form">
+      <field name="name">LeafLink Brands Form</field>
+      <field name="model">leaflink.manager.brand</field>
+      <field name="arch" type="xml">
+        <form>
+            <sheet>
+                <group>
+                    <group>
+                        <field name="external_id" />
+                    </group>
+
+                    <group>
+                        <field name="external_slug" />
+                    </group>
+                </group>
+
+                <group>
+                    <group>
+                        <field name="internal_brand_id"/>
+                    </group>
+                    <group>
+                        <field name="internal_vendor_id" />
+                    </group>
+                    <group>
+                        <field name="api_backend" />
+                    </group>
+                </group>
+            </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- EVD -->
+
+    <!-- LeafLink API Tree -->
+     <record model="ir.ui.view" id="leaflink_connector.manager_api_tree">
+      <field name="name">LeafLink API Tree</field>
+      <field name="model">leaflink.manager.api</field>
+      <field name="arch" type="xml">
+        <tree>
+            <field name="name" />
+            <field name="external_id" />
+            <field name="external_slug" />
+            <field name="base_uri" />
+            <field name="enabled" />
+        </tree>
+      </field>
+    </record>
+
+    <!-- LeafLink API Form -->
+    <record model="ir.ui.view" id="leaflink_connector.manager_api_form">
+      <field name="name">LeafLink API Form</field>
+      <field name="model">leaflink.manager.api</field>
+      <field name="arch" type="xml">
+        <form>
+            <sheet>
+                <group>
+                    <group>
+                        <field name="name" />
+                        <field name="token" />
+                    </group>
+
+                    <group>
+                        <field name="base_uri" />
+                    </group>
+                </group>
+
+                <group>
+                    <field name="external_id" />
+                    <field name="external_slug" />
+                </group>
+            </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <!-- EVD -->
+
+    <!-- LeafLink API Tree -->
+     <record model="ir.ui.view" id="leaflink_connector.manager_product_tree">
+      <field name="name">LeafLink Product Tree</field>
+      <field name="model">leaflink.product.template</field>
+      <field name="arch" type="xml">
+        <tree>
+            <field name="name" />
+            <field name="odoo_id" />
+            <field name="external_id" />
+            <field name="enabled" />
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="leaflink_connector.manager_product_tree">
+        <field name="name">LeafLink Customers</field>
+        <field name="model">leaflink.res.partner</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="odoo_id"/>
+                <field name="external_id"/>
+                <field name="enabled"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- LeafLink Product Form -->
+    <record model="ir.ui.view" id="leaflink_connector.manager_product_form">
+      <field name="name">LeafLink Product Form</field>
+      <field name="model">leaflink.product.template</field>
+      <field name="arch" type="xml">
+        <form>
+            <sheet>
+                <group>
+                    <group>
+                        <field name="image_1_id" width="25%" height="25%" widget="image"/>
+                        <field name="image_2_id" width="25%" height="25%" widget="image"/>
+                        <field name="image_3_id" width="25%" height="25%" widget="image"/>
+                    </group>
+                    <group>
+                        <field name="image_4_id" width="25%" height="25%" widget="image"/>
+                        <field name="image_5_id" width="25%" height="25%" widget="image"/>
+                    </group>
+                </group>
+            </sheet>
+
+            <sheet>
+                <group>
+                    <group>
+                        <field name="odoo_id"/>
+                    </group>
+                    <group>
+                        <field name="backend_id"/>
+                    </group>
+                </group>
+
+                <group>
+                    <field name="description"/>
+                </group>
+            </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="leaflink_connector.manager_sales_rep_tree">
+      <field name="name">LeafLink Sales</field>
+      <field name="model">leaflink.sales.rep</field>
+      <field name="arch" type="xml">
+        <tree>
+            <field name="odoo_sales_rep" />
+            <field name="external_id" />
+        </tree>
+      </field>
+    </record>
+
+
+     <record model="ir.ui.view" id="leaflink_connector.manager_sales_order_tree">
+      <field name="name">LeafLink SOs</field>
+      <field name="model">leaflink.sale.order</field>
+      <field name="arch" type="xml">
+        <tree>
+            <field name="odoo_id" />
+            <field name="external_id" />
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="leaflink_connector.manager_category_tree">
+      <field name="name">LeafLink Active Categories</field>
+      <field name="model">leaflink.product.category</field>
+      <field name="arch" type="xml">
+        <tree>
+            <field name="odoo_id" />
+            <field name="external_id" />
+            <field name="slug" />
+        </tree>
+      </field>
+    </record>
+
+
+
+    <record model="ir.ui.view" id="leaflink_connector.manager_sales_order_form">
+      <field name="name">LeafLink SOs</field>
+      <field name="model">leaflink.sale.order</field>
+      <field name="arch" type="xml">
+        <tree>
+            <field name="odoo_id" />
+            <field name="external_id" />
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="leaflink_connector.manager_sales_rep_form">
+      <field name="name">LeafLink Sales Rep</field>
+      <field name="model">leaflink.sales.rep</field>
+      <field name="arch" type="xml">
+        <form>
+            <sheet>
+                <field name="odoo_sales_rep" />
+                <field name="external_id" />
+                <field name="backend_id" />
+            </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="leaflink_connector.manager_res_partner_form">
+      <field name="name">LeafLink Customer</field>
+      <field name="model">leaflink.res.partner</field>
+      <field name="arch" type="xml">
+        <form>
+            <sheet>
+                <field name="odoo_id" />
+                <field name="external_id" />
+                <field name="backend_id" />
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="leaflink_connector.manager_sale_order_form">
+      <field name="name">LeafLink SO</field>
+      <field name="model">leaflink.sale.order</field>
+      <field name="arch" type="xml">
+        <form>
+            <sheet>
+                <group>
+                    <group>
+                        <field name="odoo_id" />
+                        <field name="external_id" />
+                    </group>
+                </group>
+            </sheet>
+        </form>
+      </field>
+    </record>
+
+
+<!-- actions opening views on models -->
+<!--=======================================================================-->
+
+
+    <!-- LeafLink Settings -->
+    <record model="ir.actions.act_window" id="leaflink_connector.manager_settings_action_window">
+      <field name="name">LeafLink Settings</field>
+      <field name="res_model">leaflink.manager.settings</field>
+      <field name="view_mode">tree,form</field>
+      <field name="sequence">100000</field>
+    </record>
+
+    <!-- LeafLink Brands -->
+    <record model="ir.actions.act_window" id="leaflink_connector.manager_brands_action_window">
+      <field name="name">LeafLink Brands</field>
+      <field name="res_model">leaflink.manager.brand</field>
+      <field name="view_mode">tree,form</field>
+      <field name="sequence">100</field>
+    </record>
+
+    <!-- LeafLink API -->
+    <record model="ir.actions.act_window" id="leaflink_connector.manager_api_action_window">
+      <field name="name">LeafLink API</field>
+      <field name="res_model">leaflink.manager.api</field>
+      <field name="view_mode">tree,form</field>
+      <field name="sequence">1000</field>
+    </record>
+
+    <!-- LeafLink Product -->
+    <record model="ir.actions.act_window" id="leaflink_connector.product_action_window">
+      <field name="name">LeafLink Product</field>
+      <field name="res_model">leaflink.product.template</field>
+      <field name="view_mode">tree,form</field>
+      <field name="sequence">10000</field>
+    </record>
+
+    <!-- LeafLink Categories -->
+    <record model="ir.actions.act_window" id="leaflink_connector.categories_action_window">
+      <field name="name">LeafLink Categories</field>
+      <field name="res_model">leaflink.product.category</field>
+      <field name="view_mode">tree,form</field>
+      <field name="sequence">10</field>
+    </record>
+
+    <!-- LeafLink Customers -->
+    <record model="ir.actions.act_window" id="leaflink_connector.customers_action_window">
+      <field name="name">LeafLink Customers</field>
+      <field name="res_model">leaflink.res.partner</field>
+      <field name="view_mode">tree,form</field>
+      <field name="sequence">20</field>
+    </record>
+
+    <!-- LeafLink SO -->
+    <record model="ir.actions.act_window" id="leaflink_connector.sales_action_window">
+      <field name="name">LeafLink Sales</field>
+      <field name="res_model">leaflink.sale.order</field>
+      <field name="view_mode">tree,form</field>
+      <field name="sequence">30</field>
+    </record>
+
+    <!-- LeafLink Sales Rep -->
+    <record model="ir.actions.act_window" id="leaflink_connector.sale_rep_action_window">
+      <field name="name">LeafLink Sales Rep</field>
+      <field name="res_model">leaflink.sales.rep</field>
+      <field name="view_mode">tree,form</field>
+      <field name="sequence">50</field>
+    </record>
+
+    <!-- LeafLink Sync Schedule -->
+
+<!--manager_schedule_action_window-->
+
+
+<!-- server actions -->
+<!--=======================================================================-->
+
+
+    <!-- LeafLink Settings -->
+    <record model="ir.actions.server" id="leaflink_connector.manager_settings_server">
+      <field name="name">LeafLink Settings server</field>
+      <field name="model_id" ref="model_leaflink_manager_settings"/>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+
+    <!-- LeafLink Brands -->
+    <record model="ir.actions.server" id="leaflink_connector.manager_brands_server">
+      <field name="name">LeafLink Brands server</field>
+      <field name="model_id" ref="model_leaflink_manager_brand"/>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+
+    <!-- LeafLink API -->
+    <record model="ir.actions.server" id="leaflink_connector.manager_api_server">
+      <field name="name">LeafLink API server</field>
+      <field name="model_id" ref="model_leaflink_manager_api"/>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+
+
+<!-- Menu Items -->
+<!--=======================================================================-->
+
+
+    <!-- Top menu item -->
+    <menuitem name="LeafLink" id="leaflink_connector.menu_root"/>
+
+    <!-- menu categories -->
+    <menuitem name="Manage"
+              id="leaflink_connector.manage_root"
+              parent="leaflink_connector.menu_root"/>
+
+    <menuitem name="API Environment"
+              id="leaflink_connector.api_manage_root"
+              parent="leaflink_connector.menu_root"/>
+
+    <!-- actions -->
+
+     <menuitem name="Products"
+              id="leaflink_connector.setting_menu_product"
+              parent="leaflink_connector.manage_root"
+              action="leaflink_connector.product_action_window"/>
+
+    <menuitem name="Sales"
+              id="leaflink_connector.sales_menu_product"
+              parent="leaflink_connector.manage_root"
+              action="leaflink_connector.sales_action_window" />
+
+    <menuitem name="Customers"
+              id="leaflink_connector.setting_menu_customers"
+              parent="leaflink_connector.manage_root"
+              action="leaflink_connector.customers_action_window"/>
+
+    <menuitem name="Sales Rep"
+              id="leaflink_connector.sales_rep_menu_customers"
+              parent="leaflink_connector.manage_root"
+              action="leaflink_connector.sale_rep_action_window"/>
+
+     <menuitem name="Brands"
+               id="leaflink_connector.setting_menu_brands"
+               parent="leaflink_connector.manage_root"
+               action="leaflink_connector.manager_brands_action_window"/>
+
+    <menuitem name="API Connections"
+              id="leaflink_connector.setting_menu_api"
+              parent="leaflink_connector.api_manage_root"
+              action="leaflink_connector.manager_api_action_window"/>
+
+     <!--<menuitem name="Schedule"-->
+              <!--id="leaflink_connector.menu_settings"-->
+              <!--parent="leaflink_connector.api_manage_root"-->
+              <!--action="leaflink_connector.manager_schedule_action_window"/>-->
+
+    <menuitem name="Categories"
+              id="leaflink_connector.setting_menu_categories"
+              parent="leaflink_connector.manage_root"
+              action="leaflink_connector.categories_action_window"/>
+
+</odoo>
