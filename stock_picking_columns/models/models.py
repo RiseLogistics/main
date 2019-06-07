@@ -6,7 +6,7 @@ from odoo import models, fields, api, _
 class StockPickingColumns(models.Model):
     _inherit = "stock.picking"
 
-    dyme_route_schedule = fields.Many2one("Route Schedule",
+    dyme_route_schedule = fields.Many2one("x_route_schedule",
                                           related="partner_id.x_route_schedule",
                                           store=True,
                                           copy=True,
