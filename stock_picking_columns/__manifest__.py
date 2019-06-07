@@ -12,6 +12,7 @@
     'license': "Other proprietary",
     'depends': [
         "stock",
+        "sale"
     ],
 
     'external_dependencies': {"python": [], "bin": []},
