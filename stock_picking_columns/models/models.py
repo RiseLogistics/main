@@ -32,3 +32,15 @@ class StockPickingColumns(models.Model):
                                      store=True,
                                      readonly=True)
 
+    so_delivery = fields.One2many(comodel_name="x_dispatch_task",
+                                  inverse_name="x_order_id",
+                                  domain=[("x_task_type", "=", "PRODUCT_DELIVERY")],
+                                  readonly=True,
+                                  default=None)
+
+
+    so_delivery_date = fields.Datetime(string="Scheduled Delivery",
+                                       related="so_delivery.x_scheduled_at",
+                                       store=True,
+                                       readonly=True,
+                                       default=None)
