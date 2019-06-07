@@ -19,8 +19,8 @@ class StockPickingColumns(models.Model):
                                            readonly=True)
 
 
-    so_modified_at = fields.Datetime("SO Modified On",
-                                     compute="_compute_so_modified_at",
+    so_modified_at = fields.Datetime(string="SO Modified On",
+                                     related="sale_id.write_date",
                                      store=True,
                                      copy=True,
                                      readonly=True,
@@ -33,9 +33,9 @@ class StockPickingColumns(models.Model):
     #                                  readonly=True)
 
     #
-    @api.depends("origin")
-    def _compute_so_modified_at(self):
-        if self.sale_id and self.sale_id.write_date:
-            return self.sale_id.write_date
-
-        return None
+    # @api.depends("origin")
+    # def _compute_so_modified_at(self):
+    #     if self.sale_id and self.sale_id.write_date:
+    #         return self.sale_id.write_date
+    #
+    #     return None
