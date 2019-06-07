@@ -24,9 +24,9 @@ class StockPickingColumns(models.Model):
                                      store=True,
                                      copy=True,
                                      readonly=True)
-
-    so_modified_by = fields.Many2one("res.users",
-                                     related="sale_id.write_uid",
-                                     copy=True,
-                                     store=True,
-                                     readonly=True)
+    #
+    # so_modified_by = fields.Many2one("res.users",
+    #                                  related="sale_id.write_uid",
+    #                                  copy=True,
+    #                                  store=True,
+    #                                  readonly=True)
