@@ -19,3 +19,14 @@ class StockPickingColumns(models.Model):
                                            readonly=True)
 
 
+    so_modified_at = fields.Datetime("SO Modified On",
+                                     related="so_id.write_date",
+                                     store=True,
+                                     copy=True,
+                                     readonly=True)
+
+    so_modified_by = fields.Many2one("res.users",
+                                     related="so_id.write_uid",
+                                     copy=True,
+                                     store=True,
+                                     readonly=True)
