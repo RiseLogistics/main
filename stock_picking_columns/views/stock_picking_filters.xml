@@ -29,7 +29,7 @@
                 <field name="dyme_route_schedule"/>
                 <field name="so_modified_at"/>
                 <field name="so_modified_by"/>
-                <field name="so_delivery_date" />
+                <field name="so_delivery_date" string="Delivery Date"/>
             </xpath>
         </field>
     </record>
