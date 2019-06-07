@@ -10,11 +10,11 @@
                 <filter string="Route Schedule" domain="[]" context="{'group_by': 'dyme_route_schedule'}"/>
                 <filter string="Region" domain="[]" context="{'group_by': 'dyme_partner_region'}"/>
                 <filter string="Delivery Date" domain="[]" context="{'group_by': 'so_delivery_date'}" />
-                <separtor/>
-                <field name="dyme_partner_region" />
-                <field name="dyme_route_schedule" />
-                <field name="so_delivery_date" />
             </field>
+
+            <field name="dyme_partner_region"/>
+            <field name="dyme_route_schedule"/>
+            <field name="so_delivery_date"/>
         </field>
     </record>
 
