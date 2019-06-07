@@ -20,13 +20,22 @@ class StockPickingColumns(models.Model):
 
 
     so_modified_at = fields.Datetime("SO Modified On",
-                                     related="sale_id.write_date",
+                                     compute="_compute_so_modified_at",
                                      store=True,
                                      copy=True,
-                                     readonly=True)
+                                     readonly=True,
+                                     default=None)
     #
     # so_modified_by = fields.Many2one("res.users",
     #                                  related="sale_id.write_uid",
     #                                  copy=True,
     #                                  store=True,
     #                                  readonly=True)
+
+
+    @api.depends("sale_id")
+    def _compute_so_modified_at(self):
+        if self.sale_id and self.sale_id.write_date:
+            return self.sale_id.write_date
+
+        return None
