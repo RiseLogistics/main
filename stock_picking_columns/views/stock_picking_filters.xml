@@ -14,16 +14,17 @@
     </record>
 
     <record id="view_stock_picking_dyme_columns" model="ir.ui.view">
-    <field name="name">Stock Picking</field>
-    <field name="model">stock.picking</field>
-    <field name="inherit_id" ref="stock.vpicktree"/>
-    <field name="arch" type="xml">
+        <field name="name">Stock Picking</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree"/>
+        <field name="arch" type="xml">
 
-        <xpath expr="//tree/field[@name='picking_type_id']" position="after">
-            <field name="region"/>
-            <field name="dyme_route_schedule"/>
-            <field name="so_modified_at"/>
-            <field name="so_modified_by"/>
-        </xpath>
-    </field>
+            <xpath expr="//tree/field[@name='picking_type_id']" position="after">
+                <field name="region"/>
+                <field name="dyme_route_schedule"/>
+                <field name="so_modified_at"/>
+                <field name="so_modified_by"/>
+            </xpath>
+        </field>
+    </record>
 </odoo>
