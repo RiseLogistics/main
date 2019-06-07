@@ -9,6 +9,9 @@
             <field name="name" position="after">
                 <filter string="Route Schedule" domain="[]" context="{'group_by': 'dyme_route_schedule'}"/>
                 <filter string="Region" domain="[]" context="{'group_by': 'dyme_partner_region'}"/>
+                <separtor/>
+                <filter name="dmye_partner_region" />
+                <filter name="dyme_route_schedule" />
             </field>
         </field>
     </record>
