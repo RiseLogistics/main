@@ -1,33 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <odoo>
-    <!--<record id="stock_picking_dyme_columns" model="ir.ui.view">-->
-        <!--<field name="name">DYME Stock Pick Columns Filter</field>-->
-        <!--<field name="model">stock.picking</field>-->
-        <!--<field name="inherit_id" ref="stock.view_picking_internal_search"/>-->
-        <!--<field name="arch" type="xml">-->
-            <!--<field name="name" position="after">-->
-                <!--<filter string="Route Schedule" domain="[]" context="{'group_by': 'dyme_route_schedule'}"/>-->
-                <!--<filter string="Region" domain="[]" context="{'group_by': 'dyme_partner_region'}"/>-->
-                <!--<separtor/>-->
-                <!--<filter name="dmye_partner_region" />-->
-                <!--<filter name="dyme_route_schedule" />-->
-            <!--</field>-->
-        <!--</field>-->
-    <!--</record>-->
+    <record id="stock_picking_dyme_columns" model="ir.ui.view">
+        <field name="name">DYME Stock Pick Columns Filter</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <filter string="Route Schedule" domain="[]" context="{'group_by': 'dyme_route_schedule'}"/>
+                <filter string="Region" domain="[]" context="{'group_by': 'dyme_partner_region'}"/>
+                <filter string="Delivery Date" domain="[]" context="{'group_by': 'so_delivery_date'}" />
+                <separtor/>
+                <field name="dmye_partner_region" />
+                <field name="dyme_route_schedule" />
+                <field name="so_delivery_date" />
+            </field>
+        </field>
+    </record>
 
-    <!--<record id="view_stock_picking_dyme_columns" model="ir.ui.view">-->
-        <!--<field name="name">Stock Picking</field>-->
-        <!--<field name="model">stock.picking</field>-->
-        <!--<field name="inherit_id" ref="stock.vpicktree"/>-->
-        <!--<field name="arch" type="xml">-->
+    <record id="view_stock_picking_dyme_columns" model="ir.ui.view">
+        <field name="name">Stock Picking</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree"/>
+        <field name="arch" type="xml">
 
-            <!--<xpath expr="//tree/field[@name='picking_type_id']" position="after">-->
-                <!--<field name="dyme_partner_region"/>-->
-                <!--<field name="dyme_route_schedule"/>-->
-                <!--<field name="so_modified_at"/>-->
-                <!--<field name="so_modified_by"/>-->
-            <!--</xpath>-->
-        <!--</field>-->
-    <!--</record>-->
+            <xpath expr="//tree/field[@name='picking_type_id']" position="after">
+                <field name="dyme_partner_region"/>
+                <field name="dyme_route_schedule"/>
+                <field name="so_modified_at"/>
+                <field name="so_modified_by"/>
+                <field name="so_delivery_date" />
+            </xpath>
+        </field>
+    </record>
 </odoo>
