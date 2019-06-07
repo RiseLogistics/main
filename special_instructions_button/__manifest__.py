@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'version': "0.1",
-    'name': "Stock Pick DYME Columns",
+    'name': "Product Special Instructions Button",
     'summary': "Stock Picking Product Special Instructions",
     'category': "Manufacturing",
     'images': [],
