@@ -13,7 +13,7 @@ Vagrantfile
 .idea/*
 .local_dev_yazan/*
 var.env
-bcc/
+#bcc/
 .idea/
 
 # exception to the rule
