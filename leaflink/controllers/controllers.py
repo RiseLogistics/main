@@ -235,13 +235,13 @@ class LeaflinkConnector(http.Controller):
     @property
     def _token(self):
         env_params = http.request.env["ir.config_parameter"].sudo()
-        return env_params.get_param("leaflink.api.token", "1")
+        return env_params.get_param("leaflink.api.token", False)
 
     def _auth(self, body):
         try:
             _logger.info("Validating access token")
 
-            if self._token != body["token"]:
+            if not self._token or (self._token != body["token"]):
                 raise exceptions.AccessDenied()
 
         except KeyError:
