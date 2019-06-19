@@ -235,11 +235,6 @@ class ResPartner(models.Model):
     def is_bcc_valid(self):
         is_valid = False
         today = datetime.datetime.today()
-        config_env = self.env["ir.config_parameter"].sudo()
-
-        if config_env.get_param("license_validation.force_all_sale_orders", False):
-            log.warn("Forcing SO for *ALL PARTNERS* %s" % self.id)
-            is_valid = True
 
         if self.force_so_creation:
             log.warn("Forcing SO creation for partner %s" % self.id)
@@ -302,12 +297,19 @@ class SaleOrderBCCValidator(models.Model):
 
     @api.multi
     def action_confirm(self):
+        skip_validation = False
+        config_env = self.env["ir.config_parameter"].sudo()
+
+        if config_env.get_param("license_validation.force_all_sale_orders", False):
+            log.warn("Forcing SO for *ALL PARTNERS* %s" % self.id)
+            skip_validation = True
+
         # x_studio_field_kVKl0 == created_by[vendor[ on Odoo
-        if not self.x_studio_field_kVKl0.is_bcc_valid():
+        if not skip_validation and not self.x_studio_field_kVKl0.is_bcc_valid():
             raise exceptions.Warning("Partner license [Vendor] NOT compliant. "
                                      "Must have at least one active license to place an SO.")
 
-        if not self.partner_id.is_bcc_valid():
+        if not skip_validation and not self.partner_id.is_bcc_valid():
             raise exceptions.Warning("Partner license [Retailer] NOT compliant. "
                                      "Must have at least one active license to place an SO.")
 
