@@ -305,9 +305,9 @@ class SaleOrderBCCValidator(models.Model):
             skip_validation = True
 
         # x_studio_field_kVKl0 == created_by[vendor[ on Odoo
-        if not skip_validation and not self.x_studio_field_kVKl0.is_bcc_valid():
-            raise exceptions.Warning("Partner license [Vendor] NOT compliant. "
-                                     "Must have at least one active license to place an SO.")
+        # if not skip_validation and not self.x_studio_field_kVKl0.is_bcc_valid():
+        #     raise exceptions.Warning("Partner license [Vendor] NOT compliant. "
+        #                              "Must have at least one active license to place an SO.")
 
         if not skip_validation and not self.partner_id.is_bcc_valid():
             raise exceptions.Warning("Partner license [Retailer] NOT compliant. "
