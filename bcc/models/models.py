@@ -232,7 +232,7 @@ class ResPartner(models.Model):
         return lic_rec
 
     @api.multi
-    def is_bcc_valid(self):
+    def is_bcc_valid(self, source=None):
         is_valid = False
         today = datetime.datetime.today()
 
@@ -243,8 +243,12 @@ class ResPartner(models.Model):
         for bcc in self.bcc_license_data:
             expired = (to_py_date(bcc.expiration_date) - today).days <= 0
 
-            if (bcc.status == "Active" and not expired) and bcc.data_source == "BCC":
-                is_valid = True
+            if bcc.status == "Active" and not expired:
+                if source and bcc.data_source == source:
+                    is_valid = True
+
+                elif not source:
+                    is_valid = True
 
         return is_valid
 
@@ -309,7 +313,7 @@ class SaleOrderBCCValidator(models.Model):
         #     raise exceptions.Warning("Partner license [Vendor] NOT compliant. "
         #                              "Must have at least one active license to place an SO.")
 
-        if not skip_validation and not self.partner_id.is_bcc_valid():
+        if not skip_validation and not self.partner_id.is_bcc_valid(source="BCC"):
             raise exceptions.Warning("Partner license [Retailer] NOT compliant. "
                                      "Must have at least one active license to place an SO.")
 
