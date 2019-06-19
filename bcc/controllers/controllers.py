@@ -42,7 +42,7 @@ class Bcc(http.Controller):
         partner = partner_model.browse(partner_id)
 
         _res = {
-            "can_purchase_so": partner.is_bcc_valid(),
+            "can_purchase_so": partner.is_bcc_valid(source="BCC"),
             "force_so_creation": partner.force_so_creation,
             "licenses": []
         }
