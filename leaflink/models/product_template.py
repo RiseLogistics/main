@@ -41,6 +41,11 @@ class LeafLinkProductTemplate(models.Model):
                     record.leaflink_external_id,
                     **record.map_quantites
                 ).run()
+
+                try: work_with_context.leaflink_crud.patch(
+                    record.leaflink_external_id, wholesale_price=record.standard_price)
+                except: pass
+
                 work_with_context.set_leaflink_sync_ts()
 
             except LeafLinkClientRequestError as e:
