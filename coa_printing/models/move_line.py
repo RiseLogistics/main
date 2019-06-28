@@ -88,7 +88,7 @@ class COAPrintWizard(models.TransientModel):
 
         for move_line in pick.move_line_ids:
             if move_line.x_coa_upload:
-                token = coa_server_env.generate_coa_request_token(self.seed, move_line)
+                token = coa_server_env.generate_coa_request_token(self.seed, move_line, with_url=True)
                 files.append(token)
 
         if files:
