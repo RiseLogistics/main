@@ -118,7 +118,7 @@ class COAPrintWizard(models.TransientModel):
 
             coa_in_download_list = coa_server_env.active_token_exists(
                 coa_filename=move_line.x_coa_upload_filename,
-                lot_id=move_line.lot_id.name,
+                lot_name=move_line.lot_id.name,
                 wizard_id=self.wizard_session_id)
 
             if not coa_in_download_list:
