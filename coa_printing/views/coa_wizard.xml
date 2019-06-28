@@ -41,33 +41,26 @@
                             </tree>
                         </field>
                     </sheet>
-
-                    <!--<sheet>-->
-                        <!--<field name="move_line_dne_coa_ids" context="{'group_by':'reference'}" position="after"-->
-                               <!--readonly="1">-->
-                            <!--<tree invisible="[('move_line_dne_coa_ids', '=', False)]" decoration-warning="1" expand="1" context="{'group_by':'reference'}">-->
-                                <!--<field name="reference"/>-->
-                                <!--<field name="product_id"/>-->
-                                <!--<field name="lot_id"/>-->
-                            <!--</tree>-->
-                        <!--</field>-->
-                    <!--</sheet>-->
                 </group>
 
                 <footer states="draft">
-                    <button name="draft_coa_print_action"
-                            string="Continue" class="oe_right oe_highlight" type="object"/>
-                    <button string="Cancel" class="oe_right" special="cancel"/>
+                    <group><button name="draft_coa_print_action"
+                                   string="Continue" class="oe_right oe_button_box" type="object"/></group>
+
+                    <group><button string="Cancel" class="oe_right" special="cancel"/></group>
                 </footer>
 
                 <footer states="confirm">
-                    <button name="confirm_coa_print_action" string="Print" class="oe_left oe_highlight" type="object"/>
-
-                    <button string="Cancel" class="oe_right" special="cancel"/>
+                    <group>
+                        <button name="confirm_coa_print_action" string="Print" class="oe_right oe_button_box" type="object"/>
+                    </group>
+                    <group>
+                        <button string="Cancel" class="oe_left" special="Done"/>
+                    </group>
                 </footer>
 
                 <footer states="print">
-                        <button string="Done" class="oe_left" special="cancel"/>
+                    <button string="Done" class="oe_left" special="cancel"/>
                 </footer>
             </form>
         </field>

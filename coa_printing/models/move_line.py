@@ -135,7 +135,6 @@ class COAPrintWizard(models.TransientModel):
         self.ensure_one()
         record = self
         req_payload_parts = []
-        record.state = "print"
         config_env = self.env["ir.config_parameter"].sudo()
 
         files_only = config_env.get_param("dyme.coa.merger.no_page_header", "NO").strip()
