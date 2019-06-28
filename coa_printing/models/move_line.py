@@ -20,6 +20,7 @@ class COAFileServerModel(models.Model):
     lot_id = fields.Integer(index=True)
     product_id = fields.Integer(index=True)
     wizard_id = fields.Integer(index=True)
+    coa_filename = fields.Char(index=True)
 
     @api.model
     def generate_coa_request_token(self, seed, move_line, wizard_id, with_url=False):
@@ -29,7 +30,8 @@ class COAFileServerModel(models.Model):
             "move_line_id": move_line.id,
             "lot_id": move_line.lot_id.id,
             "product_id": move_line.product_id.id,
-            "wizard_id": wizard_id
+            "wizard_id": wizard_id,
+            "coa_filename": move_line.x_coa_upload_filename
         })
 
         config_env = self.env["ir.config_parameter"].sudo()
@@ -50,8 +52,8 @@ class COAFileServerModel(models.Model):
         return None
 
     @api.model
-    def active_token_exists(self, product_id, lot_id, wizard_id):
-        _coa_serve_rec = self.search([("product_id", "=", product_id),
+    def active_token_exists(self, coa_filename, lot_id, wizard_id):
+        _coa_serve_rec = self.search([("coa_filename", "=", coa_filename),
                                       ("active", "=", True),
                                       ("wizard_id", "=", wizard_id),
                                       ("lot_id", "=", lot_id)])
@@ -106,12 +108,15 @@ class COAPrintWizard(models.TransientModel):
         coa_server_env = self.env["coa.file.server"]
 
         for move_line in pick.move_line_ids:
+            if not move_line.x_coa_upload:
+                continue
+
             coa_in_download_list = coa_server_env.active_token_exists(
-                product_id=move_line.product_id.id,
+                coa_filename=move_line.x_coa_upload_filename,
                 lot_id=move_line.lot_id.id,
                 wizard_id=self.wizard_session_id)
 
-            if move_line.x_coa_upload and not coa_in_download_list:
+            if not coa_in_download_list:
                 token = coa_server_env.generate_coa_request_token(
                     seed=self.seed,
                     wizard_id=self.wizard_session_id,
