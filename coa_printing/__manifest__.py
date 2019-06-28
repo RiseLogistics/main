@@ -19,6 +19,7 @@
 
     'data': [
         'views/coa_wizard.xml',
+        'security/ir.model.access.csv'
     ],
     'qweb': [
     ],

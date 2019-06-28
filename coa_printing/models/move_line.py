@@ -110,7 +110,7 @@ class COAPrintWizard(models.TransientModel):
     @api.model
     def _build_single_transfer_coa_request(self, pick, files_only=False):
         files = []
-        coa_server_env = self.env["coa.file.server"]
+        coa_server_env = self.env["coa.file.server"].sudo()
 
         for move_line in pick.move_line_ids:
             if not move_line.x_coa_upload:
