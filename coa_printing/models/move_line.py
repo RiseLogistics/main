@@ -22,7 +22,7 @@ class COAFileServerModel(models.Model):
     move_line_id = fields.Many2one("stock.move.line")
     active = fields.Boolean(default=True)
 
-    lot_id = fields.Integer(index=True)
+    lot_id = fields.Char(index=True)
     product_id = fields.Integer(index=True)
     wizard_id = fields.Integer(index=True)
     coa_filename = fields.Char(index=True)
@@ -33,7 +33,7 @@ class COAFileServerModel(models.Model):
         self.create({
             "token": _token,
             "move_line_id": move_line.id,
-            "lot_id": move_line.lot_id.id,
+            "lot_id": move_line.lot_id.name,
             "product_id": move_line.product_id.id,
             "wizard_id": wizard_id,
             "coa_filename": move_line.x_coa_upload_filename
@@ -57,11 +57,11 @@ class COAFileServerModel(models.Model):
         return None
 
     @api.model
-    def active_token_exists(self, coa_filename, lot_id, wizard_id):
+    def active_token_exists(self, coa_filename, lot_name, wizard_id):
         _coa_serve_rec = self.search([("coa_filename", "=", coa_filename),
                                       ("active", "=", True),
                                       ("wizard_id", "=", wizard_id),
-                                      ("lot_id", "=", lot_id)])
+                                      ("lot_id", "=", lot_name)])
 
         if _coa_serve_rec: return True
 
@@ -118,7 +118,7 @@ class COAPrintWizard(models.TransientModel):
 
             coa_in_download_list = coa_server_env.active_token_exists(
                 coa_filename=move_line.x_coa_upload_filename,
-                lot_id=move_line.lot_id.id,
+                lot_id=move_line.lot_id.name,
                 wizard_id=self.wizard_session_id)
 
             if not coa_in_download_list:
