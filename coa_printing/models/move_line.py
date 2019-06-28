@@ -11,7 +11,7 @@ _logger = logging.getLogger(__name__)
 
 
 def soft_seed():
-    upper, lower = 9999, 199
+    upper, lower = 999, 199
     return random.randint(lower, upper)
 
 
