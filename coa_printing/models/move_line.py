@@ -28,7 +28,7 @@ class COAFileServerModel(models.Model):
             "token": _token,
             "move_line_id": move_line.id,
             "lot_id": move_line.lot_id.id,
-            "product": move_line.product_id.id,
+            "product_id": move_line.product_id.id,
             "wizard_id": wizard_id
         })
 
