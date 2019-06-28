@@ -55,7 +55,7 @@
                         <button name="confirm_coa_print_action" string="Print" class="oe_right oe_button_box" type="object"/>
                     </group>
                     <group>
-                        <button string="Cancel" class="oe_left" special="Done"/>
+                        <button string="Done" class="oe_left" special="cancel"/>
                     </group>
                 </footer>
 
