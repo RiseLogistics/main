@@ -33,8 +33,7 @@
                 <group states="confirm">
                     <sheet>
                         <field name="move_line_coa_ids" string="" readonly="1">
-                            <tree decoration-success="1" default_order="reference" string="COAs To Print">
-                                <field name="reference" invisible="1"/>
+                            <tree decoration-success="1" string="COAs To Print">
                                 <field name="x_coa_upload_filename"/>
                                 <field name="product_id"/>
                                 <field name="lot_id"/>
