@@ -104,13 +104,13 @@ class COAPrintWizard(models.TransientModel):
         record.state = "print"
         config_env = self.env["ir.config_parameter"].sudo()
 
-        files_only = config_env.get_param("dyme.coa.merger.with_page_header", "NO").strip()
+        files_only = config_env.get_param("dyme.coa.merger.no_page_header", "NO").strip()
         files_only = files_only == "YES"
 
         for pick in record.pick_ids:
             payload_part = self._build_single_transfer_coa_request(pick, files_only)
             if payload_part:
-                req_payload_parts += payload_part
+                req_payload_parts += files_only and payload_part or [req_payload_parts]
 
         payload = SAFE_URL.urlencode({"coa": files_only and [{"name": "COAs", "files": req_payload_parts}] or req_payload_parts,
                                       "token": self._sign_request()})
