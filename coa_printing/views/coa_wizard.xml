@@ -44,19 +44,17 @@
                 </group>
 
                 <footer states="draft">
-                    <group><button name="draft_coa_print_action"
-                                   string="Continue" class="oe_right oe_button_box" type="object"/></group>
+                    <button name="draft_coa_print_action"
+                            string="Continue"
+                            class="btn-primary"
+                            type="object"/>
 
-                    <group><button string="Cancel" class="oe_right" special="cancel"/></group>
+                    <button string="Cancel" class="btn-default"  special="cancel"/>
                 </footer>
 
                 <footer states="confirm">
-                    <group>
-                        <button name="confirm_coa_print_action" string="Print" class="oe_right oe_button_box" type="object"/>
-                    </group>
-                    <group>
-                        <button string="Done" class="oe_left" special="cancel"/>
-                    </group>
+                    <button name="confirm_coa_print_action" string="Print" class="btn-primary" type="object"/>
+                    <button string="Done" class="btn-default" special="cancel"/>
                 </footer>
 
                 <footer states="print">
