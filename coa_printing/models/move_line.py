@@ -10,6 +10,11 @@ import jwt
 _logger = logging.getLogger(__name__)
 
 
+def soft_seed():
+    upper, lower = 9999, 199
+    return random.randint(lower, upper)
+
+
 class COAFileServerModel(models.Model):
     _name = "coa.file.server"
 
@@ -24,7 +29,7 @@ class COAFileServerModel(models.Model):
 
     @api.model
     def generate_coa_request_token(self, seed, move_line, wizard_id, with_url=False):
-        _token = seed * random.randint(345, 98765)
+        _token = seed * soft_seed()
         self.create({
             "token": _token,
             "move_line_id": move_line.id,
@@ -91,8 +96,8 @@ class COAPrintWizard(models.TransientModel):
                                              compute="_set_move_line_dne_coa_ids",
                                              string="COAs Not Assigned")
 
-    seed = fields.Integer(default=lambda _: random.randint(100, 999))
-    wizard_session_id = fields.Integer(default=lambda _: random.randint(199, 999999))
+    seed = fields.Integer(default=lambda _: soft_seed())
+    wizard_session_id = fields.Integer(default=lambda _: soft_seed())
 
     def _sign_request(self, expires_in_seconds=60 * 10):
         payload = dict(exp=datetime.datetime.utcnow() +
