@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <act_window id="picks_coa_print_action"
+                name="Print COAs"
+                res_model="coa.print.wizard"
+                src_model="stock.picking"
+                view_mode="form"
+                target="new"
+                multi="True" />
+
+    <record id="view_pick_search" model="ir.ui.view">
+        <field name="name">COA Print Search</field>
+        <field name="model">stock.move.line</field>
+        <field name="arch" type="xml">
+            <search>
+                <filter name="group_by_reference" string="Group by reference" context="{'group_by':'reference'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="coa_print_view" model="ir.ui.view">
+        <field name="name">COA Print</field>
+        <field name="model">coa.print.wizard</field>
+
+        <field name="arch" type="xml">
+            <form>
+                <field name="state" invisible="1" />
+
+                <group states="draft">
+                    <field name="pick_ids" string="Selected Transfers" widget="many2many_tags"/>
+                </group>
+
+                <group states="confirm">
+                    <sheet>
+                        <field name="move_line_coa_ids" string="" readonly="1">
+                            <tree decoration-success="1" string="COAs To Print">
+                                <field name="x_coa_upload_filename"/>
+                                <field name="product_id"/>
+                                <field name="lot_id"/>
+                            </tree>
+                        </field>
+                    </sheet>
+                </group>
+
+                <footer states="draft">
+                    <button name="draft_coa_print_action"
+                            string="Continue"
+                            class="btn-primary"
+                            type="object"/>
+
+                    <button string="Cancel" class="btn-default"  special="cancel"/>
+                </footer>
+
+                <footer states="confirm">
+                    <button name="confirm_coa_print_action" string="Print" class="btn-primary" type="object"/>
+                    <button string="Done" class="btn-default" special="cancel"/>
+                </footer>
+
+                <footer states="print">
+                    <button string="Done" class="oe_left" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
