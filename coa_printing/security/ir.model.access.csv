@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_coa_file_server,coa.file.server,model_coa_file_server,,1,1,1,1
