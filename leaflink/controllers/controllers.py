@@ -64,7 +64,6 @@ class LeaflinkConnector(http.Controller):
         _logger.warning("Handling SO update for partner[%s]" % partner_rec.id)
 
         status_handlers = {
-            "Submitted": lambda: self._so_draft(so_record, payload),
             "Accepted": lambda: self._so_confirm(so_record),
             "Completed": lambda: self._so_done(so_record),
             "Rejected": lambda: self._so_cancel(so_record)
@@ -111,6 +110,7 @@ class LeaflinkConnector(http.Controller):
         }
 
         so_rec = env.with_context(ll_api=True).create(new_so)
+        self._so_draft(so_rec, payload)
         self._update_so(so_rec, payload)
 
         return so_rec
