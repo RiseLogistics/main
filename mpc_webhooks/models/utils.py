@@ -1,7 +1,7 @@
 from odoo import fields, models, api
 import logging
 import json
-
+import pika
 import requests
 from concurrent.futures import ThreadPoolExecutor, as_completed
 

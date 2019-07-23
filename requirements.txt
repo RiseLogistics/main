@@ -1,3 +1,4 @@
 futures
 pyjwt==1.7.1
 requests
+pika
