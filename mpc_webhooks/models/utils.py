@@ -36,7 +36,7 @@ def publish_change(id,model,trigger,dbname=None):
         params = pika.URLParameters('amqp://uaoqejpl:vrjdmxg7QDzqcPyS7qAIW5HSme4OEa1s@skunk.rmq.cloudamqp.com/uaoqejpl')
         conn = pika.BlockingConnection(params)
         channel = conn.channel()
-        channel.exchange_declare(exchange=topic_name,type="fanout",durable=True,auto_delete=False)
+        channel.exchange_declare(exchange=topic_name,exchange_type="fanout",durable=True,auto_delete=False)
         channel.basic_publish(body=json.dumps(payload),exchange=topic_name,routing_key="")
         _logger.info("message sent")
 
