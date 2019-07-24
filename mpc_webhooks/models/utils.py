@@ -47,6 +47,9 @@ def publish_change(id,model,trigger,dbname=None):
 
 
 def send_webhook(id, model, trigger, dbname=None):
+
+    publish_change(id,model,trigger,dbname=dbname)
+
     try:
         env_type = None
         webhook_url = None
