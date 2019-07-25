@@ -17,7 +17,7 @@ def _post(url, payload):
         _logger.info("Webhook Timeout[{0}]".format(url))
 
 
-def publish_change(id,model,trigger,dbname=None):
+def publish_change(self,id,model,trigger,dbname=None):
     try:
         env_type = None
         exchange = ""
@@ -30,8 +30,11 @@ def publish_change(id,model,trigger,dbname=None):
             'trigger': trigger
         }
 
+        config_env = self.env["ir.config_parameter"].sudo()
+        rabbit_url = config_env.get_param("rabbit_mq_broker", "").strip()
+
         _logger.info("connecting to rabbit")
-        params = pika.URLParameters('amqp://uaoqejpl:vrjdmxg7QDzqcPyS7qAIW5HSme4OEa1s@skunk.rmq.cloudamqp.com/uaoqejpl')
+        params = pika.URLParameters(rabbit_url)
         conn = pika.BlockingConnection(params)
         channel = conn.channel()
         channel.exchange_declare(exchange=topic_name,exchange_type="fanout",durable=True,auto_delete=False)
