@@ -2,6 +2,7 @@ from odoo import fields, models, api
 import logging
 import json
 import pika
+import os
 import requests
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
@@ -20,10 +21,7 @@ def publish_change(id,model,trigger,dbname=None):
     try:
         env_type = None
         exchange = ""
-        if "staging" in dbname:
-            env_type = "staging"
-        else:
-            env_type = "production"
+        env_type = os.environ['ODOO_STAGE']
 
         topic_name = "odoo_{model}_{env}".format(model=model,env=env_type)
         _logger.info("topic={topic}".format(topic=topic_name))
