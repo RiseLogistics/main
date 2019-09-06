@@ -19,8 +19,8 @@ PAYMENT_TERMS_MAPPING = {
     "Net 30":   7
 }
 
-
-SO_OWNER = 2501
+# LeafLink App contact
+SO_OWNER = 3136
 STOCK_LOCATION = 1
 
 
@@ -88,6 +88,10 @@ class LeaflinkConnector(http.Controller):
         payment_term_id = PAYMENT_TERMS_MAPPING.get(payload["payment_term"])
         if payment_term_id:
             default_write["payment_term_id"] = payment_term_id
+
+        else:
+            # default to COD if no payment terms are defined in LeafLink
+            default_write["payment_term_id"] = PAYMENT_TERMS_MAPPING.get("COD")
 
         so_record.with_context(ll_api=True).write(default_write)
         return so_record
