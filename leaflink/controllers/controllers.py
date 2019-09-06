@@ -19,8 +19,8 @@ PAYMENT_TERMS_MAPPING = {
     "Net 30":   7
 }
 
-
-SO_OWNER = 2501
+# LeafLink App contact
+SO_OWNER = 3136
 STOCK_LOCATION = 1
 
 
