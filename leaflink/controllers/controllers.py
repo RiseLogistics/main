@@ -129,7 +129,10 @@ class LeaflinkConnector(http.Controller):
         work_with_context = so_rec.with_context(ll_api=True)
         work_with_context.action_draft()
 
-        return work_with_context.write({"order_line": [(6, 0, order_line_ids)]})
+        order_line = work_with_context.write({"order_line": [(6, 0, order_line_ids)]})
+        self._so_confirm(so_rec)
+
+        return order_line
 
     def _so_confirm(self, so_rec):
         rec_id = so_rec.id
