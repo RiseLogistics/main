@@ -21,7 +21,7 @@ PAYMENT_TERMS_MAPPING = {
 
 # LeafLink App contact
 SO_OWNER = 3136
-STOCK_LOCATION = 1
+STOCK_LOCATION = 4
 
 
 class LeaflinkConnector(http.Controller):
